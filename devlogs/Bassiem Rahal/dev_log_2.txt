@@ -1,0 +1,6 @@
+week 2:
+-created a gameview class
+-created a sprite class
+-added tiles to game and made background
+-worked on sprite movement 
+-added joystick 

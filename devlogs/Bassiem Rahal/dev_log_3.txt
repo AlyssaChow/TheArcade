@@ -1,0 +1,4 @@
+-worked on spell collision 
+-worked on adding hearts as lives
+-worked on fixing portal
+-worked on enemy movement

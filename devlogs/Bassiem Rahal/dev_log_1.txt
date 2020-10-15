@@ -1,0 +1,5 @@
+week1:
+-finished d0
+-worked on d1
+-downloaded android studio
+-created a menu with buttons to link games 
