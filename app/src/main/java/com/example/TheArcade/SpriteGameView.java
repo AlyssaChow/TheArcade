@@ -1,0 +1,321 @@
+package com.example.TheArcade;
+
+
+import java.util.ArrayList;
+
+import java.util.List;
+import java.util.Random;
+
+
+import android.app.Activity;
+import android.content.Context;
+
+import android.graphics.Bitmap;
+
+import android.graphics.BitmapFactory;
+
+import android.graphics.Canvas;
+
+import android.graphics.Color;
+
+import android.graphics.Rect;
+import android.util.DisplayMetrics;
+import android.view.MotionEvent;
+
+import android.view.SurfaceHolder;
+
+import android.view.SurfaceHolder.Callback;
+
+import android.view.SurfaceView;
+
+
+public class SpriteGameView extends SurfaceView {
+
+    private Bitmap bmp;
+
+    protected double directionX = 1.0;
+    protected double directionY = 0.0;
+
+    private SurfaceHolder holder;
+
+    private GameLoopThread gameLoopThread;
+
+    private List<Sprite> sprites = new ArrayList<Sprite>();
+    private List<Portal> portal = new ArrayList<Portal>();
+    private Rect ballRect;
+    private long lastClick;
+    private List<EnergyBall> energyBalls = new ArrayList<EnergyBall>();
+    private int joystickPointerId = 0;
+    private Joystick joystick;
+    private Shoot shoot;
+
+    private int numberOfSpellsToCast = 0;
+    private List<Hero> hero = new ArrayList<Hero>();
+    Bitmap b;
+    Bitmap b1;
+    Bitmap b2;
+    Bitmap b3;
+    Bitmap b4;
+    Bitmap b5;
+    Bitmap b6;
+    Bitmap b7;
+    Bitmap b8;
+    Bitmap b9;
+    Bitmap B;
+
+    public SpriteGameView(Context context) {
+
+        super(context);
+
+
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+
+
+        ((Activity) getContext()).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+
+
+        joystick = new Joystick(150, 750, 70, 40);
+
+        shoot = new Shoot(1600, 750, 70);
+
+        setFocusable(true);
+        b = BitmapFactory.decodeResource(getResources(), R.drawable.tile1);
+        b1 = BitmapFactory.decodeResource(getResources(), R.drawable.wall_side_mid_right)
+        ;
+        b2 = BitmapFactory.decodeResource(getResources(), R.drawable.wall_side_mid_left)
+        ;
+        b3 = BitmapFactory.decodeResource(getResources(), R.drawable.wall_top_mid)
+        ;
+        b4 = BitmapFactory.decodeResource(getResources(), R.drawable.wall_top_top)
+        ;
+        b5 = BitmapFactory.decodeResource(getResources(), R.drawable.wall_corner_front_right)
+        ;
+        b6 = BitmapFactory.decodeResource(getResources(), R.drawable.wall_inner_corner_l_top_left)
+        ;
+        b7 = BitmapFactory.decodeResource(getResources(), R.drawable.wall_inner_corner_l_top_rigth)
+        ;
+        b8 = BitmapFactory.decodeResource(getResources(), R.drawable.ui_heart_full)
+        ;
+        b9 = BitmapFactory.decodeResource(getResources(), R.drawable.flask_big_red)
+        ;
+        this.ballRect = new Rect(0, 0, 0 + 40, 0 + 50);
+        b = Bitmap.createScaledBitmap(b, 100, 100, false);
+        b1 = Bitmap.createScaledBitmap(b1, 100, 100, false);
+        b2 = Bitmap.createScaledBitmap(b2, 100, 100, false);
+        b3 = Bitmap.createScaledBitmap(b3, 100, 100, false);
+        b4 = Bitmap.createScaledBitmap(b4, 100, 100, false);
+        b5 = Bitmap.createScaledBitmap(b5, 100, 100, false);
+        b6 = Bitmap.createScaledBitmap(b6, 100, 100, false);
+        b7 = Bitmap.createScaledBitmap(b7, 100, 100, false);
+        b8 = Bitmap.createScaledBitmap(b8, 100, 100, false);
+        b9 = Bitmap.createScaledBitmap(b9, 100, 100, false);
+
+        gameLoopThread = new GameLoopThread(this);
+
+        holder = getHolder();
+
+        holder.addCallback(new Callback() {
+
+
+            @Override
+
+            public void surfaceDestroyed(SurfaceHolder holder) {
+
+            }
+
+            @Override
+
+            public void surfaceCreated(SurfaceHolder holder) {
+
+                createSprites();
+
+                gameLoopThread.setRunning(true);
+
+                gameLoopThread.start();
+            }
+
+            @Override
+
+            public void surfaceChanged(SurfaceHolder holder, int format,
+
+                                       int width, int height) {
+            }
+        });
+    }
+
+    private void createSprites() {
+
+
+        hero.add(createSprite1(R.drawable.hero1));
+        portal.add(createSprite3(R.drawable.portal));
+
+    }
+
+
+    private Hero createSprite1(int resouce) {
+
+        Bitmap bmp = BitmapFactory.decodeResource(getResources(), resouce);
+
+        return new Hero(SpriteGameView.this, bmp, joystick);
+
+    }
+
+    private Sprite createSprite(int resouce) {
+
+        Bitmap bmp = BitmapFactory.decodeResource(getResources(), resouce);
+
+        return new Sprite(SpriteGameView.this, bmp, hero.get(0));
+
+    }
+
+    private EnergyBall createSprite2(int resouce) {
+
+        Bitmap bmp = BitmapFactory.decodeResource(getResources(), resouce);
+
+        return new EnergyBall(SpriteGameView.this, bmp, hero.get(0));
+
+    }
+
+    private Portal createSprite3(int resouce) {
+
+        Bitmap bmp = BitmapFactory.decodeResource(getResources(), resouce);
+
+        return new Portal(SpriteGameView.this, bmp);
+
+    }
+
+    @Override
+
+    protected void onDraw(Canvas canvas) {
+        update();
+        canvas.drawColor(Color.BLACK);
+
+
+        for (int i = 0; i < getWidth(); i += b.getWidth()) {
+            for (int j = 0; j < getHeight(); j += b.getWidth()) canvas.drawBitmap(b, i, j, null);
+        }
+
+        for (int f = 0; f < getWidth(); f += b.getWidth()) {
+            canvas.drawBitmap(b5, f, 0, null);
+        }
+        for (int k = 0; k < getWidth(); k += b.getWidth()) {
+            canvas.drawBitmap(b5, k, getHeight() - b.getWidth(), null);
+        }
+        for (int e = 0; e < getWidth(); e += b.getWidth()) {
+            canvas.drawBitmap(b4, e, 0, null);
+        }
+        for (int t = 0; t < getWidth(); t += b.getWidth()) {
+            canvas.drawBitmap(b3, t, getHeight() - 2 * b.getWidth(), null);
+        }
+        for (int w = 0; w < getHeight() - 2 * b.getWidth(); w += b.getWidth()) {
+            canvas.drawBitmap(b1, 0, w, null);
+        }
+        for (int r = 0; r < getHeight() - 2 * b.getWidth(); r += b.getWidth()) {
+            canvas.drawBitmap(b2, getWidth() - b.getWidth(), r, null);
+        }
+        canvas.drawBitmap(b6, 0, getHeight() - 2 * b.getWidth(), null);
+        canvas.drawBitmap(b7, getWidth() - b.getWidth(), getHeight() - 2 * b.getWidth(), null);
+        canvas.drawBitmap(b8, 0, getHeight() - b.getWidth(), null);
+        canvas.drawBitmap(b8, b.getWidth(), getHeight() - b.getWidth(), null);
+        canvas.drawBitmap(b8, 2 * b.getWidth(), getHeight() - b.getWidth(), null);
+        Random random = new Random();
+        joystick.draw(canvas);
+        shoot.draw(canvas);
+        for (Portal port : portal) {
+
+            port.onDraw(canvas);
+
+        }
+        for (Hero hero1 : hero) {
+
+            hero1.onDraw(canvas);
+
+        }
+        for (Sprite sprite : sprites) {
+
+            sprite.onDraw(canvas);
+
+        }
+        for (EnergyBall ener : energyBalls) {
+
+            ener.onDraw(canvas);
+        }
+    }
+
+    @Override
+
+    public boolean onTouchEvent(MotionEvent event) {
+
+
+        switch (event.getActionMasked()) {
+            case MotionEvent.ACTION_DOWN:
+            case MotionEvent.ACTION_POINTER_DOWN:
+
+                if (shoot.isPressed((int) event.getX(), (int) event.getY())) {
+                    // Joystick was not previously, and is not pressed in this event -> cast spell
+                    numberOfSpellsToCast++;
+                }
+                if (joystick.isPressed((int) event.getX(), (int) event.getY())) {
+                    // Joystick is pressed in this event -> setIsPressed(true) and store pointer id
+
+                    joystickPointerId = event.getPointerId(event.getActionIndex());
+                    joystick.setIsPressed(true);
+                }
+
+
+                return true;
+            case MotionEvent.ACTION_MOVE:
+                if (joystick.getIsPressed()) {
+                    // Joystick was pressed previously and is now moved
+
+                    joystick.setActuator((int) event.getX(), (int) event.getY());
+                }
+                return true;
+
+            case MotionEvent.ACTION_UP:
+            case MotionEvent.ACTION_POINTER_UP:
+                if (joystickPointerId == event.getPointerId(event.getActionIndex())) {
+                    // joystick pointer was let go off -> setIsPressed(false) and resetActuator()
+                    joystick.setIsPressed(false);
+                    joystick.resetActuator();
+                }
+                return true;
+        }
+        return super.onTouchEvent(event);
+
+    }
+
+    public void update() {
+
+        // Update game state
+
+        joystick.update();
+        shoot.update();
+        while (numberOfSpellsToCast > 0) {
+            sprites.add(createSprite(R.drawable.dark_skull));
+            energyBalls.add(new EnergyBall(this, b9, hero.get(0)));
+            numberOfSpellsToCast--;
+        }
+
+        for (int i = sprites.size() - 1; i >= 0; i--) {
+
+            Sprite sprite = sprites.get(i);
+
+            for (int j = energyBalls.size() - 1; j >= 0; j--) {
+
+                EnergyBall energy = energyBalls.get(j);
+
+                if (Sprite.isColliding(energy, sprite)) {
+
+
+                    energyBalls.remove(energy);
+                    sprites.remove(sprite);
+                    break;
+                }
+            }
+        }
+    }
+
+}
+
+

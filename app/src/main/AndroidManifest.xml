@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.TheArcade">
+    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name="com.example.TheArcade.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:label="@string/app_name"
+            android:screenOrientation="landscape">
+
+            <intent-filter>
+
+            <action android:name="android.intent.action.VIEW"/>
+
+            <category android:name="android.intent.category.DEFAULT"/>
+
+            <category android:name="android.intent.category.BROWSABLE"/>
+
+            <data android:scheme="https" android:host="example.com"/>
+
+            <action android:name="android.intent.action.MAIN"/>
+
+            <category android:name="android.intent.category.LAUNCHER"/>
+
+        </intent-filter>
+
+        </activity>
+
+        <activity android:name="com.example.TheArcade.tankMain"  android:theme="@style/Theme.AppCompat" android:screenOrientation="landscape" android:parentActivityName="com.example.TheArcade.MainActivity"/>
+
+        <activity android:name="com.example.TheArcade.MenuActivity" android:theme="@android:style/Theme.NoTitleBar.Fullscreen" android:screenOrientation="landscape" android:parentActivityName="com.example.TheArcade.MainActivity"/>
+
+        <activity android:name="com.example.TheArcade.GameActivity" android:theme="@android:style/Theme.NoTitleBar.Fullscreen" android:parentActivityName="com.example.TheArcade.MainActivity"/>
+
+        <activity android:name="com.example.TheArcade.ScoreActivity" android:theme="@android:style/Theme.NoTitleBar.Fullscreen" android:parentActivityName="com.example.TheArcade.MainActivity"/>
+
+        <activity android:name="com.example.TheArcade.BirdActivity" android:screenOrientation="landscape" android:parentActivityName="com.example.TheArcade.MainActivity"/>
+
+        <activity android:name="com.example.TheArcade.BirdGameActivity" android:screenOrientation="landscape" android:parentActivityName="com.example.TheArcade.BirdActivity"/>
+
+        <activity android:name="com.example.TheArcade.MainActivity2" android:theme="@style/AppTheme.NoActionBar" android:label="@string/app_name" android:screenOrientation="landscape" android:parentActivityName="com.example.TheArcade.MainActivity"> </activity>
+
+    </application>
+
+</manifest>

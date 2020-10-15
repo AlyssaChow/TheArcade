@@ -1,0 +1,46 @@
+<resources>
+    <string name="app_name">multigames</string>
+    <string name="action_settings">Settings</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+
+    <string name="mode_pause">Paused</string>
+    <string name="mode_win">Good work :-)</string>
+    <string name="mode_lose">Sorry :-(</string>
+    <string name="menu_new_game">New game</string>
+    <string name="menu_exit">Exit</string>
+    <string name="menu_resume">Resume</string>
+    <string name="default_score">0    0</string>
+    <string name="score">Score : %d</string>
+    <string name="high_score">High Score : %d</string>
+    <string name="btn_start">START</string>
+    <string name="btn_quit">QUIT</string>
+    <string name="btn_restart">RESTART</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="player_2_0">Player 2: 0</string>
+    <string name="player_1_0">Player 1: 0</string>
+    <string name="reset">reset</string>
+    <string name="mode_ready" />
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+
+    <string name="welcome">Welcome to Balloonpop!</string>
+
+    <string name="BalloonsApp">Balloonpop</string>
+    <string name="game_act">Balloonpop (in game)</string>
+    <string name="score_act">Top 10 scores</string>
+    <string name="start">Start game</string>
+    <string name="highscores">View high scores </string>
+    <string name="invitation_message" />
+    <string name="invitation_title" />
+    <string name="invitation_deep_link" />
+    <string name="invitation_custom_image" />
+    <string name="invitation_cta" />
+
+</resources>

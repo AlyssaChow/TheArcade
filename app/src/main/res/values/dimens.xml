@@ -1,0 +1,26 @@
+<resources>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="plane_x">70dp</dimen>
+
+    <dimen name="plane_height">40dp</dimen>
+
+    <dimen name="plane_width">66dp</dimen>
+
+    <dimen name="gravity">1.1dp</dimen>
+
+    <dimen name="upBoost">-11dp</dimen>
+
+    <dimen name="pipe_width">100dp</dimen>
+
+    <dimen name="pipe_spaceInBetween">275dp</dimen>
+
+    <dimen name="pipeSpeed">5dp</dimen>
+
+    <dimen name="head_height">30dp</dimen>
+
+    <dimen name="head_extra_width">20dp</dimen>
+
+    <dimen name="minPosition">20dp</dimen>
+
+    <dimen name="width">0</dimen>
+</resources>
