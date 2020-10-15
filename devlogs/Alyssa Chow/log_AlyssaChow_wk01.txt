@@ -1,0 +1,7 @@
+Dev log week 01
+
+Established game divisions
+Completed d0 (previously)
+Worked on d1
+Began working with Android Studio to develop a game of Tanks
+Have a screen and game view made

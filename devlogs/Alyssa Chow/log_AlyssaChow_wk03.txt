@@ -1,0 +1,2 @@
+Map can now be rendered
+Added wall collisions
