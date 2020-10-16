@@ -1,0 +1,6 @@
+Dev log Wk3 - Craig Pinchin
+
+created basic level generation
+worked on player controls/paddle movement
+
+

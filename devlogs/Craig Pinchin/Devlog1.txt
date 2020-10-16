@@ -1,0 +1,6 @@
+Dev log Wk1 - Craig Pinchin
+
+Worked on d1 slides
+Created mockup for main app layout
+installed android studio
+	- set up virtual device

@@ -1,0 +1,6 @@
+Dev log Wk2 - Craig Pinchin
+
+Worked on basic game design (brickbreaker like)
+Created prototype game layout
+Created basic assets for game
+
