@@ -1,0 +1,5 @@
+Dev log week 2
+
+Created onclick methods for cookies
+Created a mechanic where if player reaches certain amounts of cookie collected, they receive more cookies per clicks
+Started working on shop

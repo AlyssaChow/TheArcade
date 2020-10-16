@@ -1,0 +1,5 @@
+Dev log week 3
+
+Still working on shop
+If player clicks on the cookie, created a toast function where +1 will show up in a random area around the cookie.
+Also started working on Cookies per second mechanic as well as graphics for the buttons, icons, etc.

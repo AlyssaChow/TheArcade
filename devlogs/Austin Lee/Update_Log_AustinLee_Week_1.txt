@@ -1,0 +1,6 @@
+Dev log week 1
+
+Established game divisions
+Completed d0 (previously)
+Began working with Android Studio to create Cookie Clicker
+Set up xml for the game and added cookie.png
