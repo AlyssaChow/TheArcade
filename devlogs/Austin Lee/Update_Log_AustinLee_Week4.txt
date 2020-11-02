@@ -1,0 +1,4 @@
+Dev log week 4
+
+Added Grandma to the shop
+Adjustments to UI
