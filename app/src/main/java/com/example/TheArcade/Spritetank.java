@@ -2,23 +2,34 @@ package com.example.TheArcade;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.ColorFilter;
+import android.graphics.ColorMatrix;
+import android.graphics.ColorMatrixColorFilter;
 import android.graphics.Matrix;
+import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.Point;
 import android.graphics.PointF;
+import android.graphics.RectF;
 import android.graphics.Region;
+import android.util.Log;
 
 import java.util.ArrayList;
 
 public class Spritetank {
     private static ArrayList<Spritetank> sprites = new ArrayList<Spritetank>();
 
+    private Object parent;
+
     private String name;
-    //private boolean playable;
     private Bitmap image;
     private float x, y;
     private float rotation;
     private float scaleX = 1f, scaleY = 1f;
     private float anchorX = 0.5f, anchorY = 0.5f;
+
+    public float color = 1f;
 
     private boolean visible = true;
 
@@ -62,7 +73,12 @@ public class Spritetank {
 
     private void draw(Canvas canvas) {
         if (visible) {
-            canvas.drawBitmap(image, getMatrix(), null);
+            Paint p = new Paint();
+            ColorMatrix m = new ColorMatrix();
+            m.setSaturation(color);
+            ColorFilter f = new ColorMatrixColorFilter(m);
+            p.setColorFilter(f);
+            canvas.drawBitmap(image, getMatrix(), p);
         }
     }
 
@@ -108,7 +124,7 @@ public class Spritetank {
         return path;
     }
 
-    private Region getRegion() {
+    public Region getRegion() {
         Path path = getPath();
         Region region = new Region();
         region.setPath(path, new Region(0, 0, 10000, 10000));
@@ -138,6 +154,14 @@ public class Spritetank {
 
     public void removeCollisionLister(SpriteCollisionListener listener) {
         listeners.remove(listener);
+    }
+
+    public Object getParent() {
+        return this.parent;
+    }
+
+    public void setParent(Object parent) {
+        this.parent = parent;
     }
 
     public String getName() {
@@ -226,6 +250,8 @@ public class Spritetank {
     }
 
     public PointF getPlayerPosition() {
+        //
+
         for (int count = 0; count < sprites.size(); count++) {
             if (sprites.get(count).getName() == "tank") {
 

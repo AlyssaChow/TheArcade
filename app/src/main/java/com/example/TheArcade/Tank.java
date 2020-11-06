@@ -113,19 +113,39 @@ public class Tank {
 
         if (playable) {
             if (CustomOnClick.isDown(R.id.upButton)) {
+                float t = yPos;
                 yPos -= speed * deltaTime;
+                tankBody.setPosition(xPos, yPos);
+
+                if (DataManager.getData().map.collision(tankBody))
+                    yPos = t;
             }
 
             if (CustomOnClick.isDown(R.id.downButton)) {
+                float t = yPos;
                 yPos += speed * deltaTime;
+                tankBody.setPosition(xPos, yPos);
+
+                if (DataManager.getData().map.collision(tankBody))
+                    yPos = t;
             }
 
             if (CustomOnClick.isDown(R.id.leftButton)) {
+                float t = xPos;
                 xPos -= speed * deltaTime;
+                tankBody.setPosition(xPos, yPos);
+
+                if (DataManager.getData().map.collision(tankBody))
+                    xPos = t;
             }
 
             if (CustomOnClick.isDown(R.id.rightButton)) {
+                float t = xPos;
                 xPos += speed * deltaTime;
+                tankBody.setPosition(xPos, yPos);
+
+                if (DataManager.getData().map.collision(tankBody))
+                    xPos = t;
             }
 
             if (CustomOnClick.isDown(R.id.rotateLeftButton)) {
@@ -144,12 +164,7 @@ public class Tank {
             // AI FOR ENEMY TANKS
             tankBody.setName("EnemyTank");
             tankBarrel.setName("EnemyTank");
-            //xPos += speed * deltaTime;
-            idle(deltaTime);
-
-
         }
-
 
         tankBody.setPosition(xPos, yPos);
         tankBarrel.setPosition(xPos, yPos);
