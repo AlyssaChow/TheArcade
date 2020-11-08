@@ -2,6 +2,8 @@ package com.example.TheArcade;
 
 
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Matrix;
 import android.graphics.PointF;
 
 import java.util.ArrayList;
@@ -36,7 +38,16 @@ public class Bullet1 {
             PointF position = bullet.bulletSprite.getPosition();
             double x = position.x + bullet.velX * bullet.speed * deltaTime;
             double y = position.y + bullet.velY * bullet.speed * deltaTime;
-            bullet.bulletSprite.setPosition((float) x, (float) y);
+            bullet.bulletSprite.setPosition((float)x, (float)y);
+
+            if (Data.get().map.collision(bullet.bulletSprite)) {
+                bullet.destroy();
+            }
         }
+    }
+
+    public void destroy() {
+        bullets.remove(this);
+        bulletSprite.destroy();
     }
 }

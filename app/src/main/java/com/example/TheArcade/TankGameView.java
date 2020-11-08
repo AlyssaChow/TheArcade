@@ -11,9 +11,7 @@ import android.view.SurfaceView;
 
 public class TankGameView extends SurfaceView implements SurfaceHolder.Callback {
     private MainThread thread;
-    public static Tank tank;
-    public static Tank enemyTank;
-    public static Map map;
+
     //private Canvas canvas;
 
     public TankGameView(Context context, AttributeSet attributeSet) {
@@ -35,27 +33,30 @@ public class TankGameView extends SurfaceView implements SurfaceHolder.Callback 
         thread.setRunning(true);
         thread.start();
 
+        DataManager.getData();
+
+        Map.start(getResources());
+
         Bitmap tankBmp = BitmapFactory.decodeResource(getResources(), R.drawable.tank);
         Bitmap barrelBmp = BitmapFactory.decodeResource(getResources(), R.drawable.barrel);
 
         Bitmap eTankBmp = BitmapFactory.decodeResource(getResources(), R.drawable.enemytank);
         Bitmap eBarrelBmp = BitmapFactory.decodeResource(getResources(), R.drawable.enemybarrel);
 
-        tank = new Tank(tankBmp, barrelBmp);
-        tank.xPos = 300;
-        tank.yPos = 600;
-        tank.playable = true;
+        Data.get().tank = new Tank(tankBmp, barrelBmp);
+        Data.get().tank.xPos = 400;
+        Data.get().tank.yPos = 600;
+        Data.get().tank.playable = true;
 
-        enemyTank = new Tank(eTankBmp, eBarrelBmp);
-        enemyTank.xPos = 3000;
-        enemyTank.yPos = 600;
-        enemyTank.rotation = 90;
+        Data.get().enemyTank = new Tank(eTankBmp, eBarrelBmp);
+        Data.get().enemyTank.xPos = 3000;
+        Data.get().enemyTank.yPos = 600;
+        Data.get().enemyTank.rotation = 90;
+
+        Data.get().map = new Map(R.raw.map2);
 
 
         Bullet1.start(BitmapFactory.decodeResource(getResources(), R.drawable.bullet));
-
-        Map.start(getResources());
-        map = new Map(R.raw.map2);
 
 
     }
@@ -76,8 +77,8 @@ public class TankGameView extends SurfaceView implements SurfaceHolder.Callback 
 
 
     public void update(double deltaTime) {
-        tank.update(deltaTime);
-        enemyTank.update(deltaTime);
+        Data.get().tank.update(deltaTime);
+        Data.get().enemyTank.update(deltaTime);
         Bullet1.update(deltaTime);
 
         Spritetank.updateSprites(deltaTime);
@@ -88,18 +89,18 @@ public class TankGameView extends SurfaceView implements SurfaceHolder.Callback 
         super.draw(canvas);
         if (canvas != null) {
 
-            float yScale = (float) canvas.getHeight() / map.getHeight();
-            float xScale = (float) canvas.getWidth() / map.getWidth();
+            // Camera
+            float yScale = (float)canvas.getHeight() / Data.get().map.getHeight();
+            float xScale = (float)canvas.getWidth() / Data.get().map.getWidth();
 
-            if (map.getWidth() > map.getHeight()) {
+            if (Data.get().map.getWidth() > Data.get().map.getHeight()) {
                 canvas.scale(xScale, xScale);
-
             } else {
                 canvas.scale(yScale, yScale);
             }
 
             canvas.drawColor(Color.LTGRAY);
-            map.draw(canvas);
+            Data.get().map.draw(canvas);
 
             Spritetank.drawSprites(canvas);
         }
