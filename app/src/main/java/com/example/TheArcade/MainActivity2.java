@@ -22,6 +22,7 @@ public class MainActivity2 extends AppCompatActivity {
     SpriteGameView sprite2;
     MenuActivity gae;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -55,9 +56,8 @@ public class MainActivity2 extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity2.this, gae.getClass());
 
-                startActivity(intent);
+
             }
         });
         fab3.setOnClickListener(new View.OnClickListener() {
@@ -69,7 +69,7 @@ public class MainActivity2 extends AppCompatActivity {
         fab2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                setContentView(snakeEngine2);
 
             }
 
@@ -84,9 +84,8 @@ public class MainActivity2 extends AppCompatActivity {
         fab5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity2.this, MainActivity.class);
 
-                startActivity(intent);
+                setContentView(R.layout.activity_main);
             }
 
 
