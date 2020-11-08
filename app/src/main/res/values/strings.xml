@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">multigames</string>
+    <string name="app_name">The Arcade</string>
     <string name="action_settings">Settings</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
@@ -44,5 +44,8 @@
     <string name="invitation_cta" />
     <string name="clicksValue" >+1</string>
 
+    <string name="button">Button</string>
+    <string name="Test"><![CDATA[<]]></string>
+    <string name="RightPaddleText"><![CDATA[>]]></string>
 
 </resources>

@@ -11,14 +11,13 @@ import android.widget.Button;
 import android.widget.ImageButton;
 
 
+import com.example.TheArcade.BrickGame.Brick;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -30,6 +29,8 @@ public class MainActivity extends AppCompatActivity {
     SpriteGameView sprite;
     tankMain tankmain;
     CookieClicker cookie;
+    Brick brick;
+
     private FirebaseAnalytics mFirebaseAnalytics;
 
 
@@ -56,6 +57,8 @@ public class MainActivity extends AppCompatActivity {
         snakeEngine = new SnakeEngine(this, size);
         cookie = new CookieClicker();
 
+        brick = new Brick();
+        tankmain = new tankMain();
         // Make snakeEngine the view of the Activity
 
         setContentView(R.layout.activity_main);
@@ -71,8 +74,8 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                setContentView(sprite);
+                Intent intent = new Intent(MainActivity.this, Brick.class);
+                startActivity(intent);
             }
         });
         fab3.setOnClickListener(new View.OnClickListener() {
@@ -81,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
                 setContentView(snakeEngine);
             }
         });
-        tankmain = new tankMain();
+
         fab2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

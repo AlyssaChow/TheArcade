@@ -1,0 +1,6 @@
+Dev log Wk4 - Craig Pinchin
+
+Added ball movement
+Improved level generation
+	-Increased options
+	-different types of blocks
