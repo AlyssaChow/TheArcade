@@ -42,5 +42,7 @@
     <string name="invitation_deep_link" />
     <string name="invitation_custom_image" />
     <string name="invitation_cta" />
+    <string name="clicksValue" >+1</string>
+
 
 </resources>

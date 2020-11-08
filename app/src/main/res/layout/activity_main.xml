@@ -57,7 +57,7 @@
         android:layout_marginStart="150dp"
         android:layout_marginLeft="50dp"
         android:layout_marginTop="120dp"
-        android:text="Flappy" />
+        android:text="Cookie Click" />
 
     <Button
         android:id="@+id/button4"

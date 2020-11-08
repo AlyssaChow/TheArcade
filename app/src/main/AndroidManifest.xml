@@ -32,7 +32,16 @@
         </intent-filter>
 
         </activity>
+        <activity android:name=".CookieClicker"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name="com.example.TheArcade.tankMain"  android:theme="@style/Theme.AppCompat" android:screenOrientation="landscape" android:parentActivityName="com.example.TheArcade.MainActivity"/>
 
         <activity android:name="com.example.TheArcade.MenuActivity" android:theme="@android:style/Theme.NoTitleBar.Fullscreen" android:screenOrientation="landscape" android:parentActivityName="com.example.TheArcade.MainActivity"/>

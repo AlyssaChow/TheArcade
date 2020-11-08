@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     BirdActivity gameView;
     SpriteGameView sprite;
     tankMain tankmain;
+    CookieClicker cookie;
     private FirebaseAnalytics mFirebaseAnalytics;
 
 
@@ -53,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
         sprite = new SpriteGameView(this);
         // Create a new instance of the SnakeEngine class
         snakeEngine = new SnakeEngine(this, size);
+        cookie = new CookieClicker();
 
         // Make snakeEngine the view of the Activity
 
@@ -84,13 +86,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 // Write a message to the database
-
+                /*
                 Bundle bundle = new Bundle();
                 bundle.putString(FirebaseAnalytics.Param.ITEM_ID, String.valueOf(R.id.button2));
                 bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "fab2");
                 bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "image");
                 mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
-                Intent intent = new Intent(MainActivity.this, tankMain.class);
+
+                 */
+                Intent intent = new Intent(MainActivity.this, CookieClicker.class);
 
                 startActivity(intent);
             }
@@ -107,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(MainActivity.this, BirdActivity.class);
+                Intent intent = new Intent(MainActivity.this, MainActivity2.class);
 
                 startActivity(intent);
             }

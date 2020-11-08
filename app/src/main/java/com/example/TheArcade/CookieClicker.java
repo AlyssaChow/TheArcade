@@ -1,4 +1,4 @@
-package com.example.cookieclickerclone;
+package com.example.TheArcade;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -12,7 +12,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
+import com.example.TheArcade.MainActivity;
+import com.example.TheArcade.R;
 
 import java.util.Random;
 import java.util.Timer;
@@ -111,7 +112,7 @@ public class CookieClicker extends AppCompatActivity implements View.OnClickList
         public void onClick2(View view)
         {
             if(view.getId() == R.id.button) {
-                Intent intent = new Intent(CookieClicker.class, MainActivity.this);
+                Intent intent = new Intent(CookieClicker.this, MainActivity.class);
                 startActivity(intent);
             }
         }
