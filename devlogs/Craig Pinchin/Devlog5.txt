@@ -1,0 +1,6 @@
+Dev log Wk5 - Craig Pinchin
+
+Prepared main branch for D2
+Merged files from personal banch onto main branch
+Helped merge partners branches into main branch
+Fixed issues regarding the merging
