@@ -1,34 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CookieClicker"
     android:background="@drawable/background"
-    android:id="@+id/container">
+    tools:context=".CookieClicker">
 
     <TextView
         android:id="@+id/cookiesCollected"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
         android:layout_gravity="center"
         android:layout_marginTop="-14dp"
         android:paddingTop="20dp"
         android:text="0 Cookies!"
         android:textColor="#FFFFFF"
-        android:textSize="32sp" />
+        android:textSize="32sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <TextView
         android:id="@+id/cps"
         android:layout_width="230dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_centerHorizontal="true"
         android:layout_gravity="center"
         android:layout_marginTop="35dp"
         android:layout_marginEnd="43dp"
@@ -36,38 +34,37 @@
         android:paddingTop="20dp"
         android:text="0 Per Second"
         android:textColor="#FFFFFF"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/imgCookie"
         android:layout_width="297dp"
         android:layout_height="340dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_centerInParent="true"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
         android:layout_gravity="center_vertical"
-        android:layout_marginStart="52dp"
         android:layout_marginTop="91dp"
         android:layout_marginEnd="61dp"
         android:layout_marginRight="61dp"
         android:background="@drawable/cookie"
         android:onClick="onClick"
-        android:layout_marginLeft="52dp"
-        android:layout_alignParentLeft="true"
-        />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.02" />
 
     <TextView
         android:id="@+id/shopText"
         android:layout_width="230dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_centerHorizontal="true"
         android:layout_gravity="center"
         android:layout_marginStart="5dp"
         android:layout_marginLeft="5dp"
@@ -77,30 +74,30 @@
         android:paddingTop="20dp"
         android:text="Shop Items!"
         android:textColor="#FFFFFF"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/grandma"
         android:layout_width="75dp"
         android:layout_height="75dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
         android:layout_marginStart="5dp"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="469dp"
         android:background="@drawable/grandma"
-        android:onClick="onClick"></ImageView>
+        android:onClick="onClick"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"></ImageView>
 
     <TextView
+        android:id="@+id/textView3"
         android:layout_width="230dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_centerHorizontal="true"
         android:layout_gravity="center"
         android:layout_marginStart="83dp"
         android:layout_marginLeft="83dp"
@@ -110,39 +107,39 @@
         android:paddingTop="20dp"
         android:text="Add +0.1 cps"
         android:textColor="#FFFFFF"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/grandmaLevel"
         android:layout_width="88dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
         android:layout_gravity="center"
         android:layout_marginStart="322dp"
         android:layout_marginLeft="322dp"
         android:layout_marginEnd="1dp"
         android:layout_marginRight="1dp"
-        android:layout_marginBottom="199dp"
         android:paddingTop="20dp"
         android:text="Level 0"
         android:textColor="#FFFFFF"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@id/grandma"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.75"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/grandma"
+        app:layout_constraintVertical_bias="0.698" />
 
     <TextView
         android:id="@+id/grandmaCost"
         android:layout_width="229dp"
         android:layout_height="61dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_centerHorizontal="true"
         android:layout_gravity="center"
         android:layout_marginStart="82dp"
         android:layout_marginLeft="82dp"
@@ -152,30 +149,30 @@
         android:paddingTop="20dp"
         android:text="Costs 100 Cookies"
         android:textColor="#FFFFFF"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/oven"
         android:layout_width="75dp"
         android:layout_height="75dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
         android:layout_marginStart="5dp"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="545dp"
         android:background="@drawable/oven"
-        android:onClick="onClick"></ImageView>
+        android:onClick="onClick"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"></ImageView>
 
     <TextView
+        android:id="@+id/textView4"
         android:layout_width="230dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_centerHorizontal="true"
         android:layout_gravity="center"
         android:layout_marginStart="82dp"
         android:layout_marginLeft="82dp"
@@ -185,39 +182,37 @@
         android:paddingTop="20dp"
         android:text="Add +0.5 cps"
         android:textColor="#FFFFFF"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/ovenLevel"
         android:layout_width="88dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_centerHorizontal="true"
         android:layout_gravity="center"
         android:layout_marginStart="323dp"
         android:layout_marginLeft="323dp"
-        android:layout_marginTop="543dp"
-        android:layout_marginEnd="0dp"
-        android:layout_marginRight="0dp"
         android:paddingTop="20dp"
         android:text="Level 0"
         android:textColor="#FFFFFF"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@id/oven"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/oven"
+        app:layout_constraintVertical_bias="0.797" />
 
     <TextView
         android:id="@+id/ovenCost"
         android:layout_width="230dp"
         android:layout_height="match_parent"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_centerHorizontal="true"
         android:layout_gravity="center"
         android:layout_marginStart="82dp"
         android:layout_marginLeft="82dp"
@@ -227,15 +222,20 @@
         android:paddingTop="20dp"
         android:text="Costs 1000 Cookies!"
         android:textColor="#FFFFFF"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/button"
         android:layout_width="66dp"
         android:layout_height="36dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
+        android:onClick="onClick2"
         android:text="Back"
-        android:layout_alignParentLeft="true"
-        android:onClick="onClick2"/>
-</RelativeLayout>
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
