@@ -59,7 +59,7 @@
 
         <activity android:name="com.example.TheArcade.MainActivity2" android:theme="@style/AppTheme.NoActionBar" android:label="@string/app_name" android:screenOrientation="landscape" android:parentActivityName="com.example.TheArcade.MainActivity"> </activity>
         <activity android:name="com.example.TheArcade.Dungeon_menu" android:screenOrientation="landscape" android:parentActivityName="com.example.TheArcade.MainActivity"/>
-        <activity android:name="com.example.TheArcade.Dungeon_activity" android:screenOrientation="landscape" android:parentActivityName="com.example.TheArcade.Dungeon_menu"/>
+        <activity android:name="com.example.TheArcade.Dungeon_activity" android:screenOrientation="landscape" android:parentActivityName="com.example.TheArcade.Dungeon_menu" android:theme="@style/AppTheme.NoActionBar"/>
 
     </application>
 
