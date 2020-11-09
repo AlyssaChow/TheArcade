@@ -1,5 +1,6 @@
 package com.example.TheArcade;
 
+import java.util.List;
 import java.util.Random;
 
 import android.graphics.Bitmap;
@@ -188,6 +189,17 @@ public class Sprite {
                 Math.pow(obj2.getPositionx1() - obj1.getPositionx(), 2) +
                         Math.pow(obj2.getPositiony1() - obj1.getPositiony(), 2)
         );
+    }
+    public static double getDistanceBetweenObjects2(Sprite obj1, List<Hero> obj2) {
+        return Math.sqrt(
+                Math.pow(obj2.get(0).getPositionx() - obj1.getPositionx1(), 2) +
+                        Math.pow(obj2.get(0).getPositiony() - obj1.getPositiony1(), 2)
+        );
+    }
+    public static boolean isColliding2(Sprite obj1, List<Hero> obj2) {
+        double distance = getDistanceBetweenObjects2(obj1, obj2);
+        double distanceToCollision = 50;
+        return distance < distanceToCollision;
     }
 
     double getwidth() {

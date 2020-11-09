@@ -19,7 +19,6 @@ public class MainActivity2 extends AppCompatActivity {
     SnakeEngine snakeEngine2;
 
     BirdActivity gameView2;
-    SpriteGameView sprite2;
     MenuActivity gae;
 
 
@@ -37,7 +36,6 @@ public class MainActivity2 extends AppCompatActivity {
         display.getSize(size);
 
         gameView2 = new BirdActivity();
-        sprite2 = new SpriteGameView(this);
         gae = new MenuActivity();
         // Create a new instance of the SnakeEngine class
         snakeEngine2 = new SnakeEngine(this, size);
@@ -78,7 +76,6 @@ public class MainActivity2 extends AppCompatActivity {
         fab4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                setContentView(sprite2);
             }
         });
         fab5.setOnClickListener(new View.OnClickListener() {

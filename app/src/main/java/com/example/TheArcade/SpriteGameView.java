@@ -7,9 +7,12 @@ import java.util.List;
 import java.util.Random;
 
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 
 import android.graphics.BitmapFactory;
@@ -18,7 +21,9 @@ import android.graphics.Canvas;
 
 import android.graphics.Color;
 
+import android.graphics.Paint;
 import android.graphics.Rect;
+import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 
@@ -27,6 +32,10 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceHolder.Callback;
 
 import android.view.SurfaceView;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 
 
 public class SpriteGameView extends SurfaceView {
@@ -39,7 +48,7 @@ public class SpriteGameView extends SurfaceView {
     private SurfaceHolder holder;
 
     private GameLoopThread gameLoopThread;
-
+    private Canvas canvas;
     private List<Sprite> sprites = new ArrayList<Sprite>();
     private List<Portal> portal = new ArrayList<Portal>();
     private Rect ballRect;
@@ -48,7 +57,10 @@ public class SpriteGameView extends SurfaceView {
     private int joystickPointerId = 0;
     private Joystick joystick;
     private Shoot shoot;
-
+    private Shoot shoot2;
+    private Shoot shoot3;
+    private int score;
+    private Paint paint;
     private int numberOfSpellsToCast = 0;
     private List<Hero> hero = new ArrayList<Hero>();
     Bitmap b;
@@ -59,25 +71,39 @@ public class SpriteGameView extends SurfaceView {
     Bitmap b5;
     Bitmap b6;
     Bitmap b7;
-    Bitmap b8;
+    Bitmap b8_1;
+    Bitmap b8_2;
+    Bitmap b8_3;
+    Bitmap b8_4;
+    Bitmap b8_5;
+    Bitmap b8_6;
     Bitmap b9;
-    Bitmap B;
+    Sprite b10;
+    ImageButton B;
+    GameOver over;
+    private boolean pauseflag;
+    private SharedPreferences prefs;
+    private Dungeon_activity dungeon;
+    Dungeon_activity dun;
+    boolean gameover=false;
+    @SuppressLint("WrongViewCast")
+    public SpriteGameView(Context context, Dungeon_activity dungeon) {
 
-    public SpriteGameView(Context context) {
+        super(dungeon);
 
-        super(context);
-
-
+        pauseflag = false;
         DisplayMetrics displayMetrics = new DisplayMetrics();
-
+        this.dungeon = dungeon;
+        over = new GameOver(context);
 
         ((Activity) getContext()).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-
-
+        paint = new Paint();
+        prefs = dungeon.getSharedPreferences("game", Context.MODE_PRIVATE);
         joystick = new Joystick(150, 750, 70, 40);
 
         shoot = new Shoot(1600, 750, 70);
-
+        shoot2 = new Shoot(10, 5, 70);
+        shoot3 = new Shoot(400, 200, 70);
         setFocusable(true);
         b = BitmapFactory.decodeResource(getResources(), R.drawable.tile1);
         b1 = BitmapFactory.decodeResource(getResources(), R.drawable.wall_side_mid_right)
@@ -94,9 +120,21 @@ public class SpriteGameView extends SurfaceView {
         ;
         b7 = BitmapFactory.decodeResource(getResources(), R.drawable.wall_inner_corner_l_top_rigth)
         ;
-        b8 = BitmapFactory.decodeResource(getResources(), R.drawable.ui_heart_full)
+        b8_1 = BitmapFactory.decodeResource(getResources(), R.drawable.ui_heart_full)
+        ;
+        b8_2 = BitmapFactory.decodeResource(getResources(), R.drawable.ui_heart_full)
+        ;
+        b8_3 = BitmapFactory.decodeResource(getResources(), R.drawable.ui_heart_full)
+        ;
+        b8_4 = BitmapFactory.decodeResource(getResources(), R.drawable.ui_heart_empty)
+        ;
+        b8_5 = BitmapFactory.decodeResource(getResources(), R.drawable.ui_heart_empty)
+        ;
+        b8_6 = BitmapFactory.decodeResource(getResources(), R.drawable.ui_heart_empty)
         ;
         b9 = BitmapFactory.decodeResource(getResources(), R.drawable.flask_big_red)
+        ;
+
         ;
         this.ballRect = new Rect(0, 0, 0 + 40, 0 + 50);
         b = Bitmap.createScaledBitmap(b, 100, 100, false);
@@ -107,7 +145,12 @@ public class SpriteGameView extends SurfaceView {
         b5 = Bitmap.createScaledBitmap(b5, 100, 100, false);
         b6 = Bitmap.createScaledBitmap(b6, 100, 100, false);
         b7 = Bitmap.createScaledBitmap(b7, 100, 100, false);
-        b8 = Bitmap.createScaledBitmap(b8, 100, 100, false);
+        b8_1 = Bitmap.createScaledBitmap(b8_1, 100, 100, false);
+        b8_2 = Bitmap.createScaledBitmap(b8_2, 100, 100, false);
+        b8_3 = Bitmap.createScaledBitmap(b8_3, 100, 100, false);
+        b8_4 = Bitmap.createScaledBitmap(b8_4, 100, 100, false);
+        b8_5 = Bitmap.createScaledBitmap(b8_5, 100, 100, false);
+        b8_6 = Bitmap.createScaledBitmap(b8_6, 100, 100, false);
         b9 = Bitmap.createScaledBitmap(b9, 100, 100, false);
 
         gameLoopThread = new GameLoopThread(this);
@@ -188,6 +231,8 @@ public class SpriteGameView extends SurfaceView {
 
     protected void onDraw(Canvas canvas) {
         update();
+
+
         canvas.drawColor(Color.BLACK);
 
 
@@ -215,12 +260,17 @@ public class SpriteGameView extends SurfaceView {
         }
         canvas.drawBitmap(b6, 0, getHeight() - 2 * b.getWidth(), null);
         canvas.drawBitmap(b7, getWidth() - b.getWidth(), getHeight() - 2 * b.getWidth(), null);
-        canvas.drawBitmap(b8, 0, getHeight() - b.getWidth(), null);
-        canvas.drawBitmap(b8, b.getWidth(), getHeight() - b.getWidth(), null);
-        canvas.drawBitmap(b8, 2 * b.getWidth(), getHeight() - b.getWidth(), null);
+        canvas.drawBitmap(b8_1, 0, getHeight() - b.getWidth(), null);
+        canvas.drawBitmap(b8_2, b.getWidth(), getHeight() - b.getWidth(), null);
+        canvas.drawBitmap(b8_3, 2 * b.getWidth(), getHeight() - b.getWidth(), null);
         Random random = new Random();
         joystick.draw(canvas);
         shoot.draw(canvas);
+        shoot2.draw(canvas);
+        paint.setColor(Color.rgb(255, 255, 255));
+        paint.setTextSize(90);
+        canvas.drawText("Score:" + score, getWidth() - 400, 90, paint);
+
         for (Portal port : portal) {
 
             port.onDraw(canvas);
@@ -240,6 +290,36 @@ public class SpriteGameView extends SurfaceView {
 
             ener.onDraw(canvas);
         }
+
+        if (pauseflag) {
+
+                over.draw(canvas);
+            try {
+
+                gameLoopThread.setRunning(false);
+                gameLoopThread.sleep(2000);
+
+                dungeon.startActivity(new Intent(dungeon, Dungeon_menu.class));
+
+                dungeon.finish();
+
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+        }
+        if (gameover) {
+
+
+
+
+
+            waitBeforeExiting();
+
+
+        }
+
+
     }
 
     @Override
@@ -250,10 +330,22 @@ public class SpriteGameView extends SurfaceView {
         switch (event.getActionMasked()) {
             case MotionEvent.ACTION_DOWN:
             case MotionEvent.ACTION_POINTER_DOWN:
+                if (shoot2.isPressed((int) event.getX(), (int) event.getY())) {
+                    // Joystick was not previously, and is not pressed in this event -> cast spell
 
+                    pauseflag = true;
+
+
+                }
+                if (shoot3.isPressed((int) event.getX(), (int) event.getY())) {
+                    // Joystick was not previously, and is not pressed in this event -> cast spell
+
+                    return true;
+                }
                 if (shoot.isPressed((int) event.getX(), (int) event.getY())) {
                     // Joystick was not previously, and is not pressed in this event -> cast spell
                     numberOfSpellsToCast++;
+
                 }
                 if (joystick.isPressed((int) event.getX(), (int) event.getY())) {
                     // Joystick is pressed in this event -> setIsPressed(true) and store pointer id
@@ -289,6 +381,7 @@ public class SpriteGameView extends SurfaceView {
 
         // Update game state
 
+
         joystick.update();
         shoot.update();
         while (numberOfSpellsToCast > 0) {
@@ -301,6 +394,25 @@ public class SpriteGameView extends SurfaceView {
 
             Sprite sprite = sprites.get(i);
 
+            if (Sprite.isColliding2(sprite, hero) && b8_3 != b8_6) {
+
+                b8_3 = b8_6;
+
+                sprites.remove(sprite);
+
+            } else if (Sprite.isColliding2(sprite, hero) && b8_3 == b8_6 && b8_2 != b8_5) {
+                b8_2 = b8_5;
+                sprites.remove(sprite);
+
+            } else if (Sprite.isColliding2(sprite, hero) && b8_3 == b8_6 && b8_2 == b8_5 && b8_1 != b8_4) {
+                b8_1 = b8_4;
+                sprites.remove(sprite);
+                saveIfHighScore();
+
+                pauseflag = true;
+            }
+
+
             for (int j = energyBalls.size() - 1; j >= 0; j--) {
 
                 EnergyBall energy = energyBalls.get(j);
@@ -310,11 +422,61 @@ public class SpriteGameView extends SurfaceView {
 
                     energyBalls.remove(energy);
                     sprites.remove(sprite);
+                    score++;
                     break;
                 }
             }
         }
     }
+
+    private void saveIfHighScore() {
+
+        if (prefs.getInt("highscore", 0) < score) {
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putInt("highscore", score);
+            editor.apply();
+        }
+
+    }
+
+    public void pause() throws InterruptedException {
+        gameLoopThread.setRunning(false);
+
+
+    }
+
+    public void resume() throws InterruptedException {
+
+
+        gameLoopThread.setRunning(true);
+        gameLoopThread.join();
+        gameLoopThread = new GameLoopThread(this);
+        gameLoopThread.start();
+    }
+
+    private void waitBeforeExiting() {
+
+        try {
+            Thread.sleep(3000);
+
+            gameLoopThread.setRunning(false);
+            dungeon.startActivity(new Intent(dungeon, Dungeon_menu.class));
+            dungeon.finish();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+    private void sleep() {
+        try {
+            Thread.sleep(17);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
 
 }
 

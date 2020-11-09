@@ -26,8 +26,7 @@ public class MainActivity extends AppCompatActivity {
     SnakeEngine snakeEngine;
 
     BirdActivity gameView;
-
-    SpriteGameView sprite;
+    Dungeon_menu dungeon;
     tankMain tankmain;
     CookieClicker cookie;
     Brick brick;
@@ -53,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         display.getSize(size);
 
         gameView = new BirdActivity();
-        sprite = new SpriteGameView(this);
+        dungeon = new Dungeon_menu();
         // Create a new instance of the SnakeEngine class
         snakeEngine = new SnakeEngine(this, size);
         cookie = new CookieClicker();
