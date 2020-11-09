@@ -75,7 +75,8 @@ public class MainActivity extends AppCompatActivity {
         dungeonButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                setContentView(sprite);
+                Intent intent = new Intent(MainActivity.this, Dungeon_menu.class);
+                startActivity(intent);
             }
         });
         brickButton.setOnClickListener(new View.OnClickListener() {
