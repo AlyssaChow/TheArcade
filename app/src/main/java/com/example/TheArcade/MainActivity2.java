@@ -84,8 +84,8 @@ public class MainActivity2 extends AppCompatActivity {
         fab5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                setContentView(R.layout.activity_main);
+                Intent intent = new Intent(MainActivity2.this, MainActivity.class);
+                startActivity(intent);
             }
 
 
