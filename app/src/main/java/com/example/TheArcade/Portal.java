@@ -59,9 +59,9 @@ public class Portal {
 
         Random rnd = new Random();
 
-        x = 800;
+        x = 790;
 
-        y = 0;
+        y = 20;
 
         //   xSpeed = rnd.nextInt(MAX_SPEED * 3) - MAX_SPEED;
 
@@ -88,7 +88,7 @@ public class Portal {
 
         Rect src = new Rect(srcX, srcY, srcX + width, srcY + height);
 
-        Rect dst = new Rect(x, y, x + 100, y + 100);
+        Rect dst = new Rect(x, y, x + 110, y + 90);
 
 
         canvas.drawBitmap(bmp, src, dst, null);
