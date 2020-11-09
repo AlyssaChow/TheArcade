@@ -76,7 +76,7 @@
         android:layout_marginLeft="500dp"
         android:layout_marginTop="285dp"
         android:clickable="true"
-        android:visibility="invisible"
+        android:visibility="visible"
         app:fabSize="normal"
         app:srcCompat="@android:drawable/ic_menu_directions"
         tools:visibility="visible" />
