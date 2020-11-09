@@ -24,6 +24,7 @@ public class Tank {
             public void onCollision(SpriteCollisionEvent e) {
                 if (e.collidedSprite.getName() == "bullet") {
                     e.collidedSprite.destroy();
+                    tankBarrel.destroy();
                     e.sprite.destroy();
                 }
             }
