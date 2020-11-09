@@ -53,7 +53,7 @@ public class TankGameView extends SurfaceView implements SurfaceHolder.Callback 
         Data.get().enemyTank.yPos = 600;
         Data.get().enemyTank.rotation = 90;
 
-        Data.get().map = new Map(R.raw.map2);
+        Data.get().map = new Map(R.raw.map1);
 
 
         Bullet1.start(BitmapFactory.decodeResource(getResources(), R.drawable.bullet));
