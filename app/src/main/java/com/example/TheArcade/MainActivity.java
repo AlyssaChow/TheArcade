@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     SnakeEngine snakeEngine;
 
     BirdActivity gameView;
+
     SpriteGameView sprite;
     tankMain tankmain;
     CookieClicker cookie;
@@ -65,27 +66,28 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        Button fab = findViewById(R.id.button1);
+        Button dungeonButton = findViewById(R.id.button1);
         ImageButton fab10 = findViewById(R.id.imageButton);
-        Button fab2 = findViewById(R.id.button2);
-        Button fab3 = findViewById(R.id.button3);
-        Button fab4 = findViewById(R.id.button4);
+        Button cookieButton = findViewById(R.id.button2);
+        Button brickButton = findViewById(R.id.button3);
+        Button tankButton = findViewById(R.id.button4);
         FloatingActionButton fab5 = findViewById(R.id.floatingActionButton2);
-        fab.setOnClickListener(new View.OnClickListener() {
+
+        dungeonButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setContentView(sprite);
+            }
+        });
+        brickButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, Brick.class);
                 startActivity(intent);
             }
         });
-        fab3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                setContentView(snakeEngine);
-            }
-        });
 
-        fab2.setOnClickListener(new View.OnClickListener() {
+        cookieButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 // Write a message to the database
@@ -104,10 +106,11 @@ public class MainActivity extends AppCompatActivity {
 
 
         });
-        fab4.setOnClickListener(new View.OnClickListener() {
+        tankButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                setContentView(sprite);
+                Intent intent = new Intent(MainActivity.this, tankMain.class);
+                startActivity(intent);
             }
         });
         fab5.setOnClickListener(new View.OnClickListener() {
