@@ -1,0 +1,4 @@
+﻿Week 5:
+-prepared game for demo
+- worked on firebase (analytics….etc)
+
