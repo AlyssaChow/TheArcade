@@ -1,0 +1,3 @@
+﻿-looked at ways to link games through firebase
+-prepared for d3
+
