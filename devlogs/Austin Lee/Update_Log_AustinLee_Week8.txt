@@ -1,0 +1,5 @@
+Dev log week 8
+
+Still adding animations to game
+
+Taking a look at our database

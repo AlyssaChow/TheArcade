@@ -1,0 +1,3 @@
+Dev log week 5
+
+-Working on main functionalities
