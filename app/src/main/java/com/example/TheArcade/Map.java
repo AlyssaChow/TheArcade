@@ -108,6 +108,7 @@ public class Map {
     }
 
     public int[][] loadMap(int id) {
+        //destroy();
         InputStream databaseInputStream = resources.openRawResource(id);
         BufferedReader r = new BufferedReader(new InputStreamReader(databaseInputStream));
         try {

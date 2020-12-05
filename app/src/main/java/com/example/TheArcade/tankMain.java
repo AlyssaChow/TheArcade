@@ -3,8 +3,10 @@ package com.example.TheArcade;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.SurfaceHolder;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -15,9 +17,12 @@ public class tankMain extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        setContentView(R.layout.tankmenu);
+    }
+
+    public void startTankGame(View button) {
         setContentView(R.layout.tank);
 
         // Up Button
@@ -40,5 +45,9 @@ public class tankMain extends AppCompatActivity {
 
         // Shoot Button
         findViewById(R.id.shootButton).setOnTouchListener(new CustomOnClick());
+    }
+
+    public void returnToMenu(View button) {
+        finish();
     }
 }
