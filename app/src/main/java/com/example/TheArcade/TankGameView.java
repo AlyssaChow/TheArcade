@@ -26,12 +26,11 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
-import static com.example.TheArcade.Data.startTime;
 
 public class TankGameView extends SurfaceView implements SurfaceHolder.Callback {
     private MainThread thread;
 
-    private int currentMap = 4;
+    private int currentMap;
     private int[] maps = {
             R.raw.map1,
             R.raw.map2,
@@ -68,13 +67,20 @@ public class TankGameView extends SurfaceView implements SurfaceHolder.Callback 
         Data.get().startTime = date.format(time);
 
         try {
-            Data.get().start = date.parse(startTime);
+            Data.get().start = date.parse(Data.get().startTime);
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
         //Log.d("Time: ", Data.get().startTime + "");
-        DataManager.getData();
+        currentMap = 0;
+        mapTimeout = 0;
+        won = false;
+
+        DataManager.resetData();
+
+        if (Data.get().map != null)
+            Data.get().map.destroy();
 
         Map.start(getResources());
 
@@ -103,8 +109,8 @@ public class TankGameView extends SurfaceView implements SurfaceHolder.Callback 
         }
     }
 
-    private double mapTimeout = 0;
-    private boolean won = false;
+    private double mapTimeout;
+    private boolean won;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void update(double deltaTime) {

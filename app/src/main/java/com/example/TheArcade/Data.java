@@ -19,8 +19,8 @@ public class Data implements Serializable {
     public static Bitmap eTankBmp;
     public static Bitmap eBarrelBmp;
 
-    public static String startTime;
-    public static String endTime;
+    public String startTime;
+    public String endTime;
     public Date start = null;
     public Date end = null;
     public long diff;
