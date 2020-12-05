@@ -1,0 +1,3 @@
+Finished game
+  Added timer as scoring system
+  Added win screen
