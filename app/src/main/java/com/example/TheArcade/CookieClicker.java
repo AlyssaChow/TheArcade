@@ -28,11 +28,13 @@ public class CookieClicker extends AppCompatActivity implements View.OnClickList
     private double numClicks = 0;
     private double grandmaPrice = 100;
     private double ovenPrice = 1000;
+    private double factoryPrice = 10000;
     private int grandmaLevel = 0;
     private int ovenLevel = 0;
+    private int factoryLevel = 0;
     private double cookiesPerSecond = 0;
-    private String s1,s2, s3, s4, s5, s6;
-    public TextView cookiesCollected, cps, gLevel,gCost,oLevel,oCost;
+    private String s1,s2, s3, s4, s5, s6,s7,s8;
+    public TextView cookiesCollected, cps, gLevel,gCost,oLevel,oCost,fLevel,fCost;
     private ImageView cookie;
     Timer timer;
     private Random random;
@@ -50,6 +52,8 @@ public class CookieClicker extends AppCompatActivity implements View.OnClickList
         gCost = findViewById(R.id.grandmaCost);
         oLevel = findViewById(R.id.ovenLevel);
         oCost =  findViewById(R.id.ovenCost);
+        fLevel = findViewById(R.id.factoryLevel);
+        fCost = findViewById(R.id.factoryCost);
         backButton = findViewById(R.id.button);
         random = new Random();
         crunchSound = MediaPlayer.create(this, R.raw.crunch);
@@ -123,6 +127,31 @@ public class CookieClicker extends AppCompatActivity implements View.OnClickList
                     toast.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 0);
                     toast.show();
                 }
+        }
+        if(view.getId() == R.id.factory)
+        {
+            if (numClicks >= factoryPrice)
+            {
+                numClicks = numClicks - factoryPrice;
+                cookiesPerSecond = cookiesPerSecond + 0;
+                s2 = String.format("%.1f Per Second", cookiesPerSecond);
+                cps.setText(s2);
+                setCps();
+
+                factoryLevel += 1;
+                s7 = String.format("Level %d", factoryLevel);
+                fLevel.setText(s7);
+
+                ovenPrice += 5000;
+                s8 = String.format("Costs %d Cookies!", (int)factoryPrice);
+                fCost.setText(s8);
+            } else {
+                Toast toast = Toast.makeText(getApplicationContext(),
+                        "You do not have enough money to level up Factory",
+                        Toast.LENGTH_SHORT);
+                toast.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 0);
+                toast.show();
+            }
         }
     }
 
