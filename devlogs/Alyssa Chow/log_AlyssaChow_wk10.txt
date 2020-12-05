@@ -1,0 +1,5 @@
+Finished game
+  Added timer as scoring system
+  Added win screen
+Edit:
+  Added menu to start of game

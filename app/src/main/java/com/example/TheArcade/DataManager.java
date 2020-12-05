@@ -8,4 +8,9 @@ public class DataManager {
             data = new Data();
         return data;
     }
+
+    public static Data resetData() {
+        data = new Data();
+        return data;
+    }
 }

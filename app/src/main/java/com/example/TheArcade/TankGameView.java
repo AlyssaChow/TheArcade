@@ -5,14 +5,40 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Path;
+import android.graphics.Region;
+import android.os.Build;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+
+import androidx.annotation.RequiresApi;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.Duration;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.TimeZone;
+
 
 public class TankGameView extends SurfaceView implements SurfaceHolder.Callback {
     private MainThread thread;
 
-    //private Canvas canvas;
+    private int currentMap;
+    private int[] maps = {
+            R.raw.map1,
+            R.raw.map2,
+            R.raw.map3,
+            R.raw.map4,
+            R.raw.map5,
+            R.raw.map6
+    };
 
     public TankGameView(Context context, AttributeSet attributeSet) {
         super(context, attributeSet);
@@ -33,32 +59,40 @@ public class TankGameView extends SurfaceView implements SurfaceHolder.Callback 
         thread.setRunning(true);
         thread.start();
 
-        DataManager.getData();
+        Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT+1:00"));
+        Date time = cal.getTime();
+        SimpleDateFormat date = new SimpleDateFormat("HH:mm:ss a");
+        date.setTimeZone(TimeZone.getTimeZone("GMT+1:00"));
+
+        Data.get().startTime = date.format(time);
+
+        try {
+            Data.get().start = date.parse(Data.get().startTime);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        //Log.d("Time: ", Data.get().startTime + "");
+        currentMap = 0;
+        mapTimeout = 0;
+        won = false;
+
+        DataManager.resetData();
+
+        if (Data.get().map != null)
+            Data.get().map.destroy();
 
         Map.start(getResources());
 
-        Bitmap tankBmp = BitmapFactory.decodeResource(getResources(), R.drawable.tank);
-        Bitmap barrelBmp = BitmapFactory.decodeResource(getResources(), R.drawable.barrel);
 
-        Bitmap eTankBmp = BitmapFactory.decodeResource(getResources(), R.drawable.enemytank);
-        Bitmap eBarrelBmp = BitmapFactory.decodeResource(getResources(), R.drawable.enemybarrel);
+        Data.tankBmp = BitmapFactory.decodeResource(getResources(), R.drawable.tank);
+        Data.barrelBmp = BitmapFactory.decodeResource(getResources(), R.drawable.barrel);
+        Data.eTankBmp = BitmapFactory.decodeResource(getResources(), R.drawable.enemytank);
+        Data.eBarrelBmp = BitmapFactory.decodeResource(getResources(), R.drawable.enemybarrel);
 
-        Data.get().tank = new Tank(tankBmp, barrelBmp);
-        Data.get().tank.xPos = 400;
-        Data.get().tank.yPos = 600;
-        Data.get().tank.playable = true;
-
-        Data.get().enemyTank = new Tank(eTankBmp, eBarrelBmp);
-        Data.get().enemyTank.xPos = 3000;
-        Data.get().enemyTank.yPos = 600;
-        Data.get().enemyTank.rotation = 90;
-
-        Data.get().map = new Map(R.raw.map1);
-
+        //Data.get().map = new Map(maps[currentMap]);
 
         Bullet1.start(BitmapFactory.decodeResource(getResources(), R.drawable.bullet));
-
-
     }
 
     @Override
@@ -75,20 +109,93 @@ public class TankGameView extends SurfaceView implements SurfaceHolder.Callback 
         }
     }
 
+    private double mapTimeout;
+    private boolean won;
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void update(double deltaTime) {
-        Data.get().tank.update(deltaTime);
-        Data.get().enemyTank.update(deltaTime);
-        Bullet1.update(deltaTime);
+        if (won) {
+            return;
+        }
+        if (Data.get().map != null) {
+            mapTimeout = 1.5;
 
-        Spritetank.updateSprites(deltaTime);
+            //Log.d("DEBUG: ", "in tgv update, map != null");
+
+            Data.get().tank.update(deltaTime);
+            if (!Data.get().tank.alive) {
+                // Player lost
+                Data.get().map.destroy();
+                Data.get().map = null;
+                return;
+            }
+
+            int numEnemies = Data.get().enemyTanks.size();
+
+            for (int i = 0; i < Data.get().enemyTanks.size(); i++) {
+                Data.get().enemyTanks.get(i).update(deltaTime);
+                if (!Data.get().enemyTanks.get(i).alive)
+                    numEnemies--;
+            }
+
+            if (numEnemies == 0) {
+                // Next map
+                currentMap++;
+                Data.get().map.destroy();
+                Data.get().map = null;
+                return;
+            }
+
+            Bullet1.update(deltaTime);
+            Spritetank.updateSprites(deltaTime);
+        } else {
+
+            //Log.d("DEBUG: ", "in tgv update, map == null");
+            if (mapTimeout <= 0) {
+                if (currentMap == 5) {
+                    //WINNER
+                    won = true;
+                    if (mapTimeout <= 0) {
+                        Data.get().map = new Map(maps[currentMap]);
+                    } else {
+                        mapTimeout -= deltaTime;
+                    }
+                    Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT+1:00"));
+                    Date time = cal.getTime();
+                    SimpleDateFormat date = new SimpleDateFormat("HH:mm:ss a");
+                    date.setTimeZone(TimeZone.getTimeZone("GMT+1:00"));
+
+                    Data.get().endTime = date.format(time);
+
+                    try {
+                        Data.get().end = date.parse(Data.get().endTime);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+
+                    //Log.d("Time: ", Data.get().endTime + "");
+
+                    Data.get().diff = Data.get().end.getTime() - Data.get().start.getTime();
+                    Data.get().diffSeconds = Data.get().diff / 1000;
+                    Log.d("TIME: ","Time in seconds: " + Data.get().diffSeconds + " seconds.");
+
+
+                    return;
+                } else {
+                    Data.get().map = new Map(maps[currentMap]);
+                }
+            } else {
+                mapTimeout -= deltaTime;
+            }
+
+        }
+
     }
 
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
-        if (canvas != null) {
-
+        if (canvas != null && Data.get().map != null) {
             // Camera
             float yScale = (float)canvas.getHeight() / Data.get().map.getHeight();
             float xScale = (float)canvas.getWidth() / Data.get().map.getWidth();
@@ -101,6 +208,10 @@ public class TankGameView extends SurfaceView implements SurfaceHolder.Callback 
 
             canvas.drawColor(Color.LTGRAY);
             Data.get().map.draw(canvas);
+
+            Data.get().tank.draw(canvas);
+            for (int i = 0; i < Data.get().enemyTanks.size(); i++)
+                Data.get().enemyTanks.get(i).draw(canvas);
 
             Spritetank.drawSprites(canvas);
         }

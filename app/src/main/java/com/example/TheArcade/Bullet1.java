@@ -13,7 +13,7 @@ public class Bullet1 {
     private static Bitmap image;
     private static List<Bullet1> bullets = new ArrayList<>();
 
-    private Spritetank bulletSprite;
+    public Spritetank bulletSprite;
 
     private double velX, velY;
     private double speed = 800;
@@ -25,6 +25,15 @@ public class Bullet1 {
         bulletSprite = new Spritetank("bullet", image);
         bulletSprite.setPosition((float) (x + velX * 100), (float) (y + velY * 100));
         bulletSprite.setRotation((float) angle);
+        bulletSprite.addCollisionListener(new SpriteCollisionListener() {
+            @Override
+            public void onCollision(SpriteCollisionEvent e) {
+                if (e.collidedSprite != bulletSprite && e.collidedSprite.getName() == "bullet") {
+                    e.collidedSprite.destroy();
+                    e.sprite.destroy();
+                }
+            }
+        });
 
         bullets.add(this);
     }
@@ -49,5 +58,12 @@ public class Bullet1 {
     public void destroy() {
         bullets.remove(this);
         bulletSprite.destroy();
+    }
+
+    public static void destroyBullets() {
+        for (Bullet1 bullet : bullets) {
+            bullet.bulletSprite.destroy();
+        }
+        bullets.clear();
     }
 }
