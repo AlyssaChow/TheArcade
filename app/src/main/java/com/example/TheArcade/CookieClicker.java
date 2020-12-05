@@ -1,12 +1,17 @@
 package com.example.TheArcade;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.media.MediaPlayer;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -32,7 +37,7 @@ public class CookieClicker extends AppCompatActivity implements View.OnClickList
     Timer timer;
     private Random random;
     Button backButton;
-
+    MediaPlayer crunchSound;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,13 +52,26 @@ public class CookieClicker extends AppCompatActivity implements View.OnClickList
         oCost =  findViewById(R.id.ovenCost);
         backButton = findViewById(R.id.button);
         random = new Random();
+        crunchSound = MediaPlayer.create(this, R.raw.crunch);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onClick(View view)
     {
         if (view.getId() == R.id.imgCookie) {
-            clickOnCookie();
+            crunchSound.start();
+            Animation a = AnimationUtils.loadAnimation(this, R.anim.cookie_anim);
+            a.setAnimationListener(new CookieAnimation()
+            {
+                @Override
+                public void onAnimationEnd(Animation animation)
+                {
+                    clickOnCookie();
+                }
+            });
+            view.startAnimation(a);
+
         }
 
         if(view.getId() == R.id.grandma)
@@ -118,7 +136,6 @@ public class CookieClicker extends AppCompatActivity implements View.OnClickList
         }
 
         private void clickOnCookie() {
-
             numClicks= numClicks + 1;
             cookiesCollected.setText(String.format("%.0f Cookies!", numClicks));
             popup(R.string.clicksValue);
@@ -146,7 +163,7 @@ public class CookieClicker extends AppCompatActivity implements View.OnClickList
     }
     private void popup(int num) { //this shows the popup for the +1 toast every time a user clicks on the cookie
         final Toast clicksAdded = new Toast(this);
-        clicksAdded.setGravity(Gravity.CENTER | Gravity.TOP, random.nextInt(500)-350, random.nextInt(1000)+600);
+        clicksAdded.setGravity(Gravity.CENTER, random.nextInt(500)-200, random.nextInt(600)-550);
         clicksAdded.setDuration(clicksAdded.LENGTH_SHORT);
         TextView text = new TextView(this);
         text.setText(num);
@@ -165,7 +182,7 @@ public class CookieClicker extends AppCompatActivity implements View.OnClickList
                     clicksAdded.show();
                 }
             }
-        }, 0, 100);
+        }, 100, 10);
         clicksAdded.show();
 
     }
