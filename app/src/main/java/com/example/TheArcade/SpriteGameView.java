@@ -99,9 +99,9 @@ public class SpriteGameView extends SurfaceView {
         ((Activity) getContext()).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         paint = new Paint();
         prefs = dungeon.getSharedPreferences("game", Context.MODE_PRIVATE);
-        joystick = new Joystick(150, 750, 70, 40);
+        joystick = new Joystick(200, 900, 70, 40);
 
-        shoot = new Shoot(1600, 750, 70);
+        shoot = new Shoot(2600, 900, 70);
         shoot2 = new Shoot(10, 5, 70);
         shoot3 = new Shoot(400, 200, 70);
         setFocusable(true);

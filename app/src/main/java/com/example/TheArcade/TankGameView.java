@@ -9,12 +9,17 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Region;
 import android.os.Build;
+import android.os.Bundle;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 import androidx.annotation.RequiresApi;
+
+import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -42,7 +47,6 @@ public class TankGameView extends SurfaceView implements SurfaceHolder.Callback 
 
     public TankGameView(Context context, AttributeSet attributeSet) {
         super(context, attributeSet);
-
         getHolder().addCallback(this);
         thread = new MainThread(getHolder(), this);
         setFocusable(true);
@@ -58,7 +62,6 @@ public class TankGameView extends SurfaceView implements SurfaceHolder.Callback 
     public void surfaceCreated(SurfaceHolder holder) {
         thread.setRunning(true);
         thread.start();
-
         Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT+1:00"));
         Date time = cal.getTime();
         SimpleDateFormat date = new SimpleDateFormat("HH:mm:ss a");
@@ -72,25 +75,14 @@ public class TankGameView extends SurfaceView implements SurfaceHolder.Callback 
             e.printStackTrace();
         }
 
-        //Log.d("Time: ", Data.get().startTime + "");
-        currentMap = 0;
-        mapTimeout = 0;
-        won = false;
+        Log.d("Time: ", Data.get().start.getTime() + "");
 
-        DataManager.resetData();
-
-        if (Data.get().map != null)
-            Data.get().map.destroy();
-
-        Map.start(getResources());
-
+        reset();
 
         Data.tankBmp = BitmapFactory.decodeResource(getResources(), R.drawable.tank);
         Data.barrelBmp = BitmapFactory.decodeResource(getResources(), R.drawable.barrel);
         Data.eTankBmp = BitmapFactory.decodeResource(getResources(), R.drawable.enemytank);
         Data.eBarrelBmp = BitmapFactory.decodeResource(getResources(), R.drawable.enemybarrel);
-
-        //Data.get().map = new Map(maps[currentMap]);
 
         Bullet1.start(BitmapFactory.decodeResource(getResources(), R.drawable.bullet));
     }
@@ -107,6 +99,19 @@ public class TankGameView extends SurfaceView implements SurfaceHolder.Callback 
             }
             retry = false;
         }
+    }
+
+    public void reset() {
+        currentMap = 0;
+        mapTimeout = 0;
+        won = false;
+
+        if (Data.get().map != null)
+            Data.get().map.destroy();
+
+        DataManager.resetData();
+
+        Map.start(getResources());
     }
 
     private double mapTimeout;
@@ -127,6 +132,19 @@ public class TankGameView extends SurfaceView implements SurfaceHolder.Callback 
                 // Player lost
                 Data.get().map.destroy();
                 Data.get().map = null;
+                try {
+                    //Bundle bundle = new Bundle();
+
+                    FirebaseDatabase database = FirebaseDatabase.getInstance();
+
+                    DatabaseReference ref = database.getReference("TankHighscore");
+                    //mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+                    ref.push().setValue(currentMap+1);
+                } catch (Exception e) {
+                    Log.d("DEBUG:", "oop");
+
+                }
+
                 return;
             }
 
@@ -154,6 +172,18 @@ public class TankGameView extends SurfaceView implements SurfaceHolder.Callback 
             if (mapTimeout <= 0) {
                 if (currentMap == 5) {
                     //WINNER
+                    try {
+                        //Bundle bundle = new Bundle();
+
+                        FirebaseDatabase database = FirebaseDatabase.getInstance();
+
+                        DatabaseReference ref = database.getReference("TankHighscore");
+                        //mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+                        ref.push().setValue(5);
+                    } catch (Exception e) {
+                        Log.d("DEBUG:", "oop");
+
+                    }
                     won = true;
                     if (mapTimeout <= 0) {
                         Data.get().map = new Map(maps[currentMap]);
@@ -173,11 +203,12 @@ public class TankGameView extends SurfaceView implements SurfaceHolder.Callback 
                         e.printStackTrace();
                     }
 
-                    //Log.d("Time: ", Data.get().endTime + "");
+                    Log.d("Time: ", Data.get().end.getTime() + "");
+                    Log.d("Time: ", Data.get().start.getTime() + "");
 
-                    Data.get().diff = Data.get().end.getTime() - Data.get().start.getTime();
-                    Data.get().diffSeconds = Data.get().diff / 1000;
-                    Log.d("TIME: ","Time in seconds: " + Data.get().diffSeconds + " seconds.");
+                    //Data.get().diff = Data.get().end.getTime() - Data.get().start.getTime();
+                    //Data.get().diffSeconds = Data.get().diff / 1000;
+                    //Log.d("TIME: ","Time in seconds: " + Data.get().diff + " seconds.");
 
 
                     return;

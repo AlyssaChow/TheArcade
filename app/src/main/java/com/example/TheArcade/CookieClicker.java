@@ -1,12 +1,17 @@
 package com.example.TheArcade;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.media.MediaPlayer;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -14,6 +19,8 @@ import android.widget.Toast;
 
 import com.example.TheArcade.MainActivity;
 import com.example.TheArcade.R;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Random;
 import java.util.Timer;
@@ -23,16 +30,20 @@ public class CookieClicker extends AppCompatActivity implements View.OnClickList
     private double numClicks = 0;
     private double grandmaPrice = 100;
     private double ovenPrice = 1000;
+    private double factoryPrice = 10000;
     private int grandmaLevel = 0;
     private int ovenLevel = 0;
+    private int factoryLevel = 0;
     private double cookiesPerSecond = 0;
-    private String s1,s2, s3, s4, s5, s6;
-    public TextView cookiesCollected, cps, gLevel,gCost,oLevel,oCost;
+    private String s1,s2, s3, s4, s5, s6,s7,s8;
+    public TextView cookiesCollected, cps, gLevel,gCost,oLevel,oCost,fLevel,fCost;
     private ImageView cookie;
     Timer timer;
     private Random random;
     Button backButton;
-
+    MediaPlayer crunchSound;
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    final DatabaseReference ref = database.getReference("CookieHighscore");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,15 +56,30 @@ public class CookieClicker extends AppCompatActivity implements View.OnClickList
         gCost = findViewById(R.id.grandmaCost);
         oLevel = findViewById(R.id.ovenLevel);
         oCost =  findViewById(R.id.ovenCost);
+        fLevel = findViewById(R.id.factoryLevel);
+        fCost = findViewById(R.id.factoryCost);
         backButton = findViewById(R.id.button);
         random = new Random();
+        crunchSound = MediaPlayer.create(this, R.raw.crunch);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onClick(View view)
     {
         if (view.getId() == R.id.imgCookie) {
-            clickOnCookie();
+            crunchSound.start();
+            Animation a = AnimationUtils.loadAnimation(this, R.anim.cookie_anim);
+            a.setAnimationListener(new CookieAnimation()
+            {
+                @Override
+                public void onAnimationEnd(Animation animation)
+                {
+                    clickOnCookie();
+                }
+            });
+            view.startAnimation(a);
+
         }
 
         if(view.getId() == R.id.grandma)
@@ -106,19 +132,44 @@ public class CookieClicker extends AppCompatActivity implements View.OnClickList
                     toast.show();
                 }
         }
+        if(view.getId() == R.id.factory)
+        {
+            if (numClicks >= factoryPrice)
+            {
+                numClicks = numClicks - factoryPrice;
+                cookiesPerSecond = cookiesPerSecond + 0;
+                s2 = String.format("%.1f Per Second", cookiesPerSecond);
+                cps.setText(s2);
+                setCps();
+
+                factoryLevel += 1;
+                s7 = String.format("Level %d", factoryLevel);
+                fLevel.setText(s7);
+
+                ovenPrice += 5000;
+                s8 = String.format("Costs %d Cookies!", (int)factoryPrice);
+                fCost.setText(s8);
+            } else {
+                Toast toast = Toast.makeText(getApplicationContext(),
+                        "You do not have enough money to level up Factory",
+                        Toast.LENGTH_SHORT);
+                toast.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 0);
+                toast.show();
+            }
+        }
     }
 
 
         public void onClick2(View view)
         {
             if(view.getId() == R.id.button) {
+                ref.push().setValue(numClicks);
                 Intent intent = new Intent(CookieClicker.this, MainActivity.class);
                 startActivity(intent);
             }
         }
 
         private void clickOnCookie() {
-
             numClicks= numClicks + 1;
             cookiesCollected.setText(String.format("%.0f Cookies!", numClicks));
             popup(R.string.clicksValue);
@@ -146,7 +197,7 @@ public class CookieClicker extends AppCompatActivity implements View.OnClickList
     }
     private void popup(int num) { //this shows the popup for the +1 toast every time a user clicks on the cookie
         final Toast clicksAdded = new Toast(this);
-        clicksAdded.setGravity(Gravity.CENTER | Gravity.TOP, random.nextInt(500)-350, random.nextInt(1000)+600);
+        clicksAdded.setGravity(Gravity.CENTER, random.nextInt(500)-200, random.nextInt(600)-550);
         clicksAdded.setDuration(clicksAdded.LENGTH_SHORT);
         TextView text = new TextView(this);
         text.setText(num);
@@ -165,7 +216,7 @@ public class CookieClicker extends AppCompatActivity implements View.OnClickList
                     clicksAdded.show();
                 }
             }
-        }, 0, 100);
+        }, 100, 10);
         clicksAdded.show();
 
     }
