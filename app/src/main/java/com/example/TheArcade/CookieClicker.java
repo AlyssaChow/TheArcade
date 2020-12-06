@@ -19,6 +19,8 @@ import android.widget.Toast;
 
 import com.example.TheArcade.MainActivity;
 import com.example.TheArcade.R;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Random;
 import java.util.Timer;
@@ -40,6 +42,8 @@ public class CookieClicker extends AppCompatActivity implements View.OnClickList
     private Random random;
     Button backButton;
     MediaPlayer crunchSound;
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    final DatabaseReference ref = database.getReference("CookieHighscore");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -159,6 +163,7 @@ public class CookieClicker extends AppCompatActivity implements View.OnClickList
         public void onClick2(View view)
         {
             if(view.getId() == R.id.button) {
+                ref.push().setValue(numClicks);
                 Intent intent = new Intent(CookieClicker.this, MainActivity.class);
                 startActivity(intent);
             }
