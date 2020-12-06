@@ -72,29 +72,5 @@
         android:layout_marginTop="250dp"
         android:background="@drawable/battletanks" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="545dp"
-        android:layout_marginLeft="500dp"
-        android:layout_marginTop="285dp"
-        android:clickable="true"
-        android:visibility="invisible"
-        app:fabSize="normal"
-        app:srcCompat="@android:drawable/ic_menu_directions"
-        tools:visibility="visible" />
-
-    <ImageButton
-        android:id="@+id/imageButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="545dp"
-        android:layout_marginLeft="500dp"
-        android:layout_marginTop="285dp"
-        android:clickable="true"
-        app:fabSize="normal"
-        tools:srcCompat="@tools:sample/avatars" />
-
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
