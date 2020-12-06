@@ -1,0 +1,6 @@
+Finished game loop with map implementation
+AI addition for enemy tanks
+  - sight
+  - movement
+  - firing
+Prepared for D3

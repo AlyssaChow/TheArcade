@@ -1,0 +1,2 @@
+Began polishing game loop
+More D3 prep

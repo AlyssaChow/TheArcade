@@ -1,0 +1,5 @@
+not sure if i am counting these right... i might be a week ahead?
+
+added maps to the game
+working on main game loop
+preparing for D3

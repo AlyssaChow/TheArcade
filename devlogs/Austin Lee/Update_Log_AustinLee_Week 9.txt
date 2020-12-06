@@ -1,0 +1,4 @@
+Dev log week 9
+
+Finished adding animations
+Prepping for D3
