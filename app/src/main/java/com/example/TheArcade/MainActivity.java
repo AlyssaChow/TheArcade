@@ -67,11 +67,9 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         Button dungeonButton = findViewById(R.id.button1);
-        ImageButton fab10 = findViewById(R.id.imageButton);
         Button cookieButton = findViewById(R.id.button2);
         Button brickButton = findViewById(R.id.button3);
         Button tankButton = findViewById(R.id.button4);
-        FloatingActionButton fab5 = findViewById(R.id.floatingActionButton2);
 
         dungeonButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -120,17 +118,6 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this, tankMain.class);
                 startActivity(intent);
             }
-        });
-        fab5.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Intent intent = new Intent(MainActivity.this, MainActivity2.class);
-
-                startActivity(intent);
-            }
-
-
         });
 
 
