@@ -9,12 +9,17 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Region;
 import android.os.Build;
+import android.os.Bundle;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 import androidx.annotation.RequiresApi;
+
+import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -28,6 +33,8 @@ import java.util.TimeZone;
 
 
 public class TankGameView extends SurfaceView implements SurfaceHolder.Callback {
+    final Bundle bundle = new Bundle();
+    private FirebaseAnalytics mFirebaseAnalytics;
     private MainThread thread;
 
     private int currentMap;
@@ -42,7 +49,7 @@ public class TankGameView extends SurfaceView implements SurfaceHolder.Callback 
 
     public TankGameView(Context context, AttributeSet attributeSet) {
         super(context, attributeSet);
-
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(context);
         getHolder().addCallback(this);
         thread = new MainThread(getHolder(), this);
         setFocusable(true);
@@ -58,7 +65,6 @@ public class TankGameView extends SurfaceView implements SurfaceHolder.Callback 
     public void surfaceCreated(SurfaceHolder holder) {
         thread.setRunning(true);
         thread.start();
-
         Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT+1:00"));
         Date time = cal.getTime();
         SimpleDateFormat date = new SimpleDateFormat("HH:mm:ss a");
@@ -179,6 +185,10 @@ public class TankGameView extends SurfaceView implements SurfaceHolder.Callback 
                     Data.get().diffSeconds = Data.get().diff / 1000;
                     Log.d("TIME: ","Time in seconds: " + Data.get().diffSeconds + " seconds.");
 
+                    FirebaseDatabase database = FirebaseDatabase.getInstance();
+                    final DatabaseReference ref = database.getReference("TankHighscore");
+                    mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+                    ref.push().setValue("Test");
 
                     return;
                 } else {
