@@ -43,4 +43,6 @@
     <string name="invitation_custom_image" />
     <string name="invitation_cta" />
 
+    <string name="mobilesdk_app_id">1:565822024642:android:57ae909b038829ed69c45b</string>
+
 </resources>

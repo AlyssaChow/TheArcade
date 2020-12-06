@@ -33,11 +33,9 @@ import java.util.TimeZone;
 
 
 public class TankGameView extends SurfaceView implements SurfaceHolder.Callback {
-    final Bundle bundle = new Bundle();
-    private FirebaseAnalytics mFirebaseAnalytics;
     private MainThread thread;
 
-    private int currentMap;
+    private int currentMap = 0;
     private int[] maps = {
             R.raw.map1,
             R.raw.map2,
@@ -49,7 +47,6 @@ public class TankGameView extends SurfaceView implements SurfaceHolder.Callback 
 
     public TankGameView(Context context, AttributeSet attributeSet) {
         super(context, attributeSet);
-        mFirebaseAnalytics = FirebaseAnalytics.getInstance(context);
         getHolder().addCallback(this);
         thread = new MainThread(getHolder(), this);
         setFocusable(true);
@@ -78,7 +75,7 @@ public class TankGameView extends SurfaceView implements SurfaceHolder.Callback 
             e.printStackTrace();
         }
 
-        //Log.d("Time: ", Data.get().startTime + "");
+        Log.d("Time: ", Data.get().start.getTime() + "");
         currentMap = 0;
         mapTimeout = 0;
         won = false;
@@ -133,6 +130,19 @@ public class TankGameView extends SurfaceView implements SurfaceHolder.Callback 
                 // Player lost
                 Data.get().map.destroy();
                 Data.get().map = null;
+                try {
+                    //Bundle bundle = new Bundle();
+
+                    FirebaseDatabase database = FirebaseDatabase.getInstance();
+
+                    DatabaseReference ref = database.getReference("TankHighscore");
+                    //mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+                    ref.push().setValue(currentMap+1);
+                } catch (Exception e) {
+                    Log.d("DEBUG:", "oop");
+
+                }
+
                 return;
             }
 
@@ -160,6 +170,18 @@ public class TankGameView extends SurfaceView implements SurfaceHolder.Callback 
             if (mapTimeout <= 0) {
                 if (currentMap == 5) {
                     //WINNER
+                    try {
+                        //Bundle bundle = new Bundle();
+
+                        FirebaseDatabase database = FirebaseDatabase.getInstance();
+
+                        DatabaseReference ref = database.getReference("TankHighscore");
+                        //mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+                        ref.push().setValue(5);
+                    } catch (Exception e) {
+                        Log.d("DEBUG:", "oop");
+
+                    }
                     won = true;
                     if (mapTimeout <= 0) {
                         Data.get().map = new Map(maps[currentMap]);
@@ -179,16 +201,13 @@ public class TankGameView extends SurfaceView implements SurfaceHolder.Callback 
                         e.printStackTrace();
                     }
 
-                    //Log.d("Time: ", Data.get().endTime + "");
+                    Log.d("Time: ", Data.get().end.getTime() + "");
+                    Log.d("Time: ", Data.get().start.getTime() + "");
 
-                    Data.get().diff = Data.get().end.getTime() - Data.get().start.getTime();
-                    Data.get().diffSeconds = Data.get().diff / 1000;
-                    Log.d("TIME: ","Time in seconds: " + Data.get().diffSeconds + " seconds.");
+                    //Data.get().diff = Data.get().end.getTime() - Data.get().start.getTime();
+                    //Data.get().diffSeconds = Data.get().diff / 1000;
+                    //Log.d("TIME: ","Time in seconds: " + Data.get().diff + " seconds.");
 
-                    FirebaseDatabase database = FirebaseDatabase.getInstance();
-                    final DatabaseReference ref = database.getReference("TankHighscore");
-                    mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
-                    ref.push().setValue("Test");
 
                     return;
                 } else {

@@ -13,7 +13,6 @@ import android.view.WindowManager;
 public class tankMain extends AppCompatActivity {
     private SurfaceHolder surfaceHolder;
     private TankGameView gameView;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
