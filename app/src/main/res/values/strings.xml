@@ -47,5 +47,6 @@
     <string name="button">Button</string>
     <string name="Test"><![CDATA[<]]></string>
     <string name="RightPaddleText"><![CDATA[>]]></string>
+    <string name="lives">Lives:</string>
 
 </resources>

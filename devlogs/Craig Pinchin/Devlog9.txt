@@ -1,0 +1,2 @@
+- added collision for blocks
+- added game over screen

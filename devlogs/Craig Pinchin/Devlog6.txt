@@ -1,0 +1,3 @@
+-added lives & lives display
+-added ball out of bounds & restart
+-d2 preparation
