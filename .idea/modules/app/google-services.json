@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "565822024642",
+    "firebase_url": "https://thearcade-75d7b.firebaseio.com",
+    "project_id": "thearcade-75d7b",
+    "storage_bucket": "thearcade-75d7b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:565822024642:android:57ae909b038829ed69c45b",
+        "android_client_info": {
+          "package_name": "com.example.TheArcade"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "565822024642-9icrpue4k1u16pelfvaa4etfdrb2l33g.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.TheArcade",
+            "certificate_hash": "0c990f6a2357cde7b5fe9c986df9846409e54554"
+          }
+        },
+        {
+          "client_id": "565822024642-0vrvkv9qa8gmmr6hmcua9aiqup7046mg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC5Ba50hAMXPY5YrghOMo1aThfCMdNMfOY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "565822024642-0vrvkv9qa8gmmr6hmcua9aiqup7046mg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

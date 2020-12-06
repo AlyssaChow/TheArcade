@@ -12,6 +12,7 @@ import android.widget.ImageButton;
 
 
 import com.example.TheArcade.BrickGame.Brick;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
 import androidx.appcompat.app.AppCompatActivity;
