@@ -1,0 +1,3 @@
+-Started prep for d3
+-added game loss
+-basic collision with paddle

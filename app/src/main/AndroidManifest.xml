@@ -45,19 +45,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.example.TheArcade.tankMain"  android:theme="@style/Theme.AppCompat" android:screenOrientation="landscape" android:parentActivityName="com.example.TheArcade.MainActivity"/>
-
-        <activity android:name="com.example.TheArcade.MenuActivity" android:theme="@android:style/Theme.NoTitleBar.Fullscreen" android:screenOrientation="landscape" android:parentActivityName="com.example.TheArcade.MainActivity"/>
-
-        <activity android:name="com.example.TheArcade.GameActivity" android:theme="@android:style/Theme.NoTitleBar.Fullscreen" android:parentActivityName="com.example.TheArcade.MainActivity"/>
-
-        <activity android:name="com.example.TheArcade.ScoreActivity" android:theme="@android:style/Theme.NoTitleBar.Fullscreen" android:parentActivityName="com.example.TheArcade.MainActivity"/>
-
-        <activity android:name="com.example.TheArcade.BirdActivity" android:screenOrientation="landscape" android:parentActivityName="com.example.TheArcade.MainActivity"/>
-
-        <activity android:name="com.example.TheArcade.BirdGameActivity" android:screenOrientation="landscape" android:parentActivityName="com.example.TheArcade.BirdActivity"/>
-
-        <activity android:name="com.example.TheArcade.MainActivity2" android:theme="@style/AppTheme.NoActionBar" android:label="@string/app_name" android:screenOrientation="landscape" android:parentActivityName="com.example.TheArcade.MainActivity"> </activity>
 
         <activity
             android:name=".tankMain"
@@ -77,20 +64,7 @@
             android:name=".ScoreActivity"
             android:parentActivityName=".MainActivity"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
-        <activity
-            android:name=".BirdActivity"
-            android:parentActivityName=".MainActivity"
-            android:screenOrientation="landscape" />
-        <activity
-            android:name=".BirdGameActivity"
-            android:parentActivityName=".BirdActivity"
-            android:screenOrientation="landscape" />
-        <activity
-            android:name=".MainActivity2"
-            android:label="@string/app_name"
-            android:parentActivityName=".MainActivity"
-            android:screenOrientation="landscape"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+
     </application>
 
 </manifest>

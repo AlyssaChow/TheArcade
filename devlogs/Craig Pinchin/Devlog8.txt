@@ -1,0 +1,2 @@
+-finished prep for d3
+-polished collision with paddle

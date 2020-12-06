@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.TheArcade.CustomOnClick;
 import com.example.TheArcade.MainActivity;
@@ -31,14 +32,14 @@ public class Brick extends AppCompatActivity {
 
         findViewById(R.id.PaddleLeft).setOnTouchListener(new CustomOnClick());
         findViewById(R.id.PaddleRight).setOnTouchListener(new CustomOnClick());
-
+        TextView playerScore = findViewById(R.id.brick_lives);
+        playerScore.setText("3");
         Button exitButton = findViewById(R.id.exit_button);
 
         exitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(Brick.this, MainActivity.class);
-
                 startActivity(intent);
             }
 
