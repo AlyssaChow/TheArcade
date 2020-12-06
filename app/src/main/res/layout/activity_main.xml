@@ -28,45 +28,49 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <ImageView
+        android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:scaleType="centerCrop"
         android:src="@drawable/main"
-        android:scaleType="centerCrop"/>
+        app:layout_anchor="@+id/imageView"
+        app:layout_anchorGravity="center" />
+
     <Button
         android:id="@+id/button1"
-        android:layout_width="300dp"
-        android:layout_height="50dp"
+        android:layout_width="144dp"
+        android:layout_height="147dp"
         android:layout_marginStart="150dp"
-        android:layout_marginLeft="50dp"
+        android:layout_marginLeft="10dp"
         android:layout_marginTop="60dp"
-        android:text="Dungeon" />
+        android:background="@drawable/dungeonmaster" />
 
     <Button
         android:id="@+id/button3"
-        android:layout_width="300dp"
-        android:layout_height="50dp"
+        android:layout_width="144dp"
+        android:layout_height="147dp"
         android:layout_marginStart="150dp"
         android:layout_marginLeft="50dp"
-        android:layout_marginTop="180dp"
-        android:text="Brick" />
+        android:layout_marginTop="250dp"
+        android:background="@drawable/brickbreak" />
 
     <Button
         android:id="@+id/button2"
-        android:layout_width="300dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="150dp"
-        android:layout_marginLeft="50dp"
-        android:layout_marginTop="120dp"
-        android:text="Cookie Click" />
+        android:layout_width="144dp"
+        android:layout_height="147dp"
+        android:layout_marginStart="400dp"
+        android:layout_marginLeft="600dp"
+        android:layout_marginTop="60dp"
+        android:background="@drawable/cookieclicker" />
 
     <Button
         android:id="@+id/button4"
-        android:layout_width="300dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="150dp"
+        android:layout_width="144dp"
+        android:layout_height="147dp"
+        android:layout_marginStart="400dp"
         android:layout_marginLeft="50dp"
-        android:layout_marginTop="240dp"
-        android:text="Tanks" />
+        android:layout_marginTop="250dp"
+        android:background="@drawable/battletanks" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatingActionButton2"
