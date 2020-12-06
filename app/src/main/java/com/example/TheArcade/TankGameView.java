@@ -35,7 +35,7 @@ import java.util.TimeZone;
 public class TankGameView extends SurfaceView implements SurfaceHolder.Callback {
     private MainThread thread;
 
-    private int currentMap = 0;
+    private int currentMap;
     private int[] maps = {
             R.raw.map1,
             R.raw.map2,
@@ -76,24 +76,13 @@ public class TankGameView extends SurfaceView implements SurfaceHolder.Callback 
         }
 
         Log.d("Time: ", Data.get().start.getTime() + "");
-        currentMap = 0;
-        mapTimeout = 0;
-        won = false;
 
-        DataManager.resetData();
-
-        if (Data.get().map != null)
-            Data.get().map.destroy();
-
-        Map.start(getResources());
-
+        reset();
 
         Data.tankBmp = BitmapFactory.decodeResource(getResources(), R.drawable.tank);
         Data.barrelBmp = BitmapFactory.decodeResource(getResources(), R.drawable.barrel);
         Data.eTankBmp = BitmapFactory.decodeResource(getResources(), R.drawable.enemytank);
         Data.eBarrelBmp = BitmapFactory.decodeResource(getResources(), R.drawable.enemybarrel);
-
-        //Data.get().map = new Map(maps[currentMap]);
 
         Bullet1.start(BitmapFactory.decodeResource(getResources(), R.drawable.bullet));
     }
@@ -110,6 +99,19 @@ public class TankGameView extends SurfaceView implements SurfaceHolder.Callback 
             }
             retry = false;
         }
+    }
+
+    public void reset() {
+        currentMap = 0;
+        mapTimeout = 0;
+        won = false;
+
+        if (Data.get().map != null)
+            Data.get().map.destroy();
+
+        DataManager.resetData();
+
+        Map.start(getResources());
     }
 
     private double mapTimeout;
