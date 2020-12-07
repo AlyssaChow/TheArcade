@@ -10,6 +10,9 @@ import android.view.SurfaceHolder;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
+
+import com.example.TheArcade.BrickGame.Brick;
 
 public class tankMain extends AppCompatActivity {
     private SurfaceHolder surfaceHolder;
@@ -46,6 +49,18 @@ public class tankMain extends AppCompatActivity {
 
         // Shoot Button
         findViewById(R.id.shootButton).setOnTouchListener(new CustomOnClick());
+
+        Button exitButton = findViewById(R.id.back_button);
+
+        exitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(tankMain.this, MainActivity.class);
+                startActivity(intent);
+            }
+
+
+        });
     }
 
     public void returnToMenu(View button) {
