@@ -76,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
         Button tankButton = findViewById(R.id.button4);
 
 
+
         TextView textDungeon = findViewById(R.id.textDungeon);
         final SharedPreferences prefsDungeon = getSharedPreferences("game", MODE_PRIVATE);
         textDungeon.setText("Highscore: " + prefsDungeon.getInt("dungeonHighscore", 0));
@@ -85,9 +86,15 @@ public class MainActivity extends AppCompatActivity {
         textCookie.setText("Highscore: " + prefsCookie.getInt("cookieHighscore", 0));
 
 
+
         dungeonButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Bundle bundle = new Bundle();
+                bundle.putString(FirebaseAnalytics.Param.ITEM_ID, String.valueOf(R.id.button1));
+                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "fab");
+                bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "image");
+                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
                 Intent intent = new Intent(MainActivity.this, Dungeon_menu.class);
                 startActivity(intent);
             }
@@ -104,14 +111,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 // Write a message to the database
-                /*
                 Bundle bundle = new Bundle();
                 bundle.putString(FirebaseAnalytics.Param.ITEM_ID, String.valueOf(R.id.button2));
                 bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "fab2");
                 bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "image");
                 mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
-
-                 */
                 Intent intent = new Intent(MainActivity.this, CookieClicker.class);
 
                 startActivity(intent);
@@ -122,6 +126,11 @@ public class MainActivity extends AppCompatActivity {
         tankButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Bundle bundle = new Bundle();
+                bundle.putString(FirebaseAnalytics.Param.ITEM_ID, String.valueOf(R.id.button2));
+                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "fab2");
+                bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "image");
+                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
                 Intent intent = new Intent(MainActivity.this, tankMain.class);
                 startActivity(intent);
             }

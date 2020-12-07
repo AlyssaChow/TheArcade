@@ -3,6 +3,8 @@ package com.example.TheArcade.BrickGame;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.content.res.Resources;
+import android.util.Log;
+
 import com.example.TheArcade.R;
 import com.example.TheArcade.R;
 import java.util.ArrayList;
@@ -16,13 +18,12 @@ public class BrickLevel {
     private int bricksizeX = (int)(50*2.5);
     private int bricksizeY = (int)(25*2.5);
 
-    private static int offsetX = 10;
-    private static int offsetY = 300;
+    private static int offsetX = 200;
+    private static int offsetY = 600;
     private static int blocksize = 50;
     private int screenWidth;
 
     private enum Difficulty{EASY,MED,HARD};
-
 
 
     public BrickLevel(Resources resources){
@@ -44,7 +45,7 @@ public class BrickLevel {
                 map.add(gen);
                 currentX += offsetX + bricksizeX;
             }
-            currentY += 5+ bricksizeY;
+            currentY += 5 + bricksizeY;
             currentX =startX;
         }
     }
@@ -54,13 +55,21 @@ public class BrickLevel {
             map.get(i).draw(canvas);
         }
     }
+
+    public void update(BrickBall ball){
+        for(int i=map.size();i>0;i--){
+            if(map.get(i-1).intersects(ball)){
+                map.remove(i);
+            }
+        }
+    }
     //returns the position where the blocks will be centered in the middle of screen
     //Half the screen - the total length of the map
     private int getXstart(int mapX){
         return (screenWidth/2) - ((blocksize*(mapX))+(offsetX * (mapX-1)));
     }
-    public void easyMap(){
-
+    public ArrayList getmap(){
+        return map;
     }
 
 

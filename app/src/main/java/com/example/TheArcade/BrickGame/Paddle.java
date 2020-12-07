@@ -45,4 +45,8 @@ public class Paddle {
         x =(int)xLoc;
 
     }
+
+    public int returnX(){
+        return x;
+    }
 }

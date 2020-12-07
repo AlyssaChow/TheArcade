@@ -1,0 +1,2 @@
+- improved game interactions
+- polished menu

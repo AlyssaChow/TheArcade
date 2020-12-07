@@ -47,6 +47,7 @@
     <string name="button">Button</string>
     <string name="Test"><![CDATA[<]]></string>
     <string name="RightPaddleText"><![CDATA[>]]></string>
+    <string name="lives">Lives:</string>
 
     <string name="mobilesdk_app_id">1:565822024642:android:57ae909b038829ed69c45b</string>
 

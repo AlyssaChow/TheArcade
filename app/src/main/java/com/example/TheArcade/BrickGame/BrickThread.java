@@ -3,6 +3,9 @@ package com.example.TheArcade.BrickGame;
 import android.os.SystemClock;
 import android.view.SurfaceHolder;
 import android.graphics.Canvas;
+import android.widget.TextView;
+
+import com.example.TheArcade.R;
 
 public class BrickThread extends Thread{
     private SurfaceHolder surfaceHolder;
