@@ -36,7 +36,7 @@ import java.util.TimeZone;
 public class TankGameView extends SurfaceView implements SurfaceHolder.Callback {
     private MainThread thread;
     private SharedPreferences prefs;
-    private int currentMap;
+    public int currentMap;
     private int[] maps = {
             R.raw.map1,
             R.raw.map2,
@@ -125,7 +125,7 @@ public class TankGameView extends SurfaceView implements SurfaceHolder.Callback 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void update(double deltaTime) {
         if (won) {
-            saveIfHighScore();
+
             return;
         }
         if (Data.get().map != null) {
@@ -140,7 +140,7 @@ public class TankGameView extends SurfaceView implements SurfaceHolder.Callback 
                 Data.get().map = null;
                 try {
                     //Bundle bundle = new Bundle();
-                    saveIfHighScore();
+
                     FirebaseDatabase database = FirebaseDatabase.getInstance();
 
                     DatabaseReference ref = database.getReference("TankHighscore");
@@ -180,7 +180,7 @@ public class TankGameView extends SurfaceView implements SurfaceHolder.Callback 
                     //WINNER
                     try {
                         //Bundle bundle = new Bundle();
-                        saveIfHighScore();
+
                         FirebaseDatabase database = FirebaseDatabase.getInstance();
 
                         DatabaseReference ref = database.getReference("TankHighscore");
@@ -254,13 +254,4 @@ public class TankGameView extends SurfaceView implements SurfaceHolder.Callback 
         }
     }
 
-    private void saveIfHighScore()
-    {
-        if(prefs.getInt("tankHighscore",0)<currentMap+1)
-        {
-            SharedPreferences.Editor editor = prefs.edit();
-            editor.putInt("tankHighscore",currentMap+1);
-            editor.apply();
-        }
-    }
 }
