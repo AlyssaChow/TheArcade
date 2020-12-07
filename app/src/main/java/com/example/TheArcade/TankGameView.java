@@ -1,6 +1,7 @@
 package com.example.TheArcade;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -34,7 +35,7 @@ import java.util.TimeZone;
 
 public class TankGameView extends SurfaceView implements SurfaceHolder.Callback {
     private MainThread thread;
-
+    private SharedPreferences prefs;
     private int currentMap;
     private int[] maps = {
             R.raw.map1,
@@ -47,9 +48,11 @@ public class TankGameView extends SurfaceView implements SurfaceHolder.Callback 
 
     public TankGameView(Context context, AttributeSet attributeSet) {
         super(context, attributeSet);
+
         getHolder().addCallback(this);
         thread = new MainThread(getHolder(), this);
         setFocusable(true);
+
     }
 
 
@@ -62,10 +65,12 @@ public class TankGameView extends SurfaceView implements SurfaceHolder.Callback 
     public void surfaceCreated(SurfaceHolder holder) {
         thread.setRunning(true);
         thread.start();
+
         Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT+1:00"));
         Date time = cal.getTime();
         SimpleDateFormat date = new SimpleDateFormat("HH:mm:ss a");
         date.setTimeZone(TimeZone.getTimeZone("GMT+1:00"));
+
 
         Data.get().startTime = date.format(time);
 
@@ -120,6 +125,7 @@ public class TankGameView extends SurfaceView implements SurfaceHolder.Callback 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void update(double deltaTime) {
         if (won) {
+            saveIfHighScore();
             return;
         }
         if (Data.get().map != null) {
@@ -134,7 +140,7 @@ public class TankGameView extends SurfaceView implements SurfaceHolder.Callback 
                 Data.get().map = null;
                 try {
                     //Bundle bundle = new Bundle();
-
+                    saveIfHighScore();
                     FirebaseDatabase database = FirebaseDatabase.getInstance();
 
                     DatabaseReference ref = database.getReference("TankHighscore");
@@ -174,7 +180,7 @@ public class TankGameView extends SurfaceView implements SurfaceHolder.Callback 
                     //WINNER
                     try {
                         //Bundle bundle = new Bundle();
-
+                        saveIfHighScore();
                         FirebaseDatabase database = FirebaseDatabase.getInstance();
 
                         DatabaseReference ref = database.getReference("TankHighscore");
@@ -245,6 +251,16 @@ public class TankGameView extends SurfaceView implements SurfaceHolder.Callback 
                 Data.get().enemyTanks.get(i).draw(canvas);
 
             Spritetank.drawSprites(canvas);
+        }
+    }
+
+    private void saveIfHighScore()
+    {
+        if(prefs.getInt("tankHighscore",0)<currentMap+1)
+        {
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putInt("tankHighscore",currentMap+1);
+            editor.apply();
         }
     }
 }
