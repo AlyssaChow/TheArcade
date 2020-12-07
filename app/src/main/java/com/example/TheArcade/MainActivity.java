@@ -1,6 +1,7 @@
 package com.example.TheArcade;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.view.Display;
@@ -9,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 
 import com.example.TheArcade.BrickGame.Brick;
@@ -31,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
     tankMain tankmain;
     CookieClicker cookie;
     Brick brick;
-
+    int score = 0;
     private FirebaseAnalytics mFirebaseAnalytics;
 
 
@@ -63,15 +65,25 @@ public class MainActivity extends AppCompatActivity {
         // Make snakeEngine the view of the Activity
 
         setContentView(R.layout.activity_main);
+
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         Button dungeonButton = findViewById(R.id.button1);
-        ImageButton fab10 = findViewById(R.id.imageButton);
         Button cookieButton = findViewById(R.id.button2);
         Button brickButton = findViewById(R.id.button3);
         Button tankButton = findViewById(R.id.button4);
-        FloatingActionButton fab5 = findViewById(R.id.floatingActionButton2);
+
+
+        TextView textDungeon = findViewById(R.id.textDungeon);
+        final SharedPreferences prefsDungeon = getSharedPreferences("game", MODE_PRIVATE);
+        textDungeon.setText("Highscore: " + prefsDungeon.getInt("highscore", 0));
+
+        TextView textCookie = findViewById(R.id.textCookie);
+        final SharedPreferences prefsCookie = getSharedPreferences("game", MODE_PRIVATE);
+        textCookie.setText("Highscore: " + prefsCookie.getInt("highscore", 0));
+
 
         dungeonButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,17 +125,6 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this, tankMain.class);
                 startActivity(intent);
             }
-        });
-        fab5.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Intent intent = new Intent(MainActivity.this, MainActivity2.class);
-
-                startActivity(intent);
-            }
-
-
         });
 
 

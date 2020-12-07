@@ -4,6 +4,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.Build;
@@ -42,12 +43,15 @@ public class CookieClicker extends AppCompatActivity implements View.OnClickList
     private Random random;
     Button backButton;
     MediaPlayer crunchSound;
+    private SharedPreferences prefs;
+
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     final DatabaseReference ref = database.getReference("CookieHighscore");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        prefs= getSharedPreferences("game",MODE_PRIVATE);
         setContentView(R.layout.cookie_activity);
         cookiesCollected = findViewById(R.id.cookiesCollected);
         cps = findViewById(R.id.cps);
@@ -60,6 +64,8 @@ public class CookieClicker extends AppCompatActivity implements View.OnClickList
         fCost = findViewById(R.id.factoryCost);
         backButton = findViewById(R.id.button);
         random = new Random();
+
+
         crunchSound = MediaPlayer.create(this, R.raw.crunch);
     }
 
@@ -164,6 +170,7 @@ public class CookieClicker extends AppCompatActivity implements View.OnClickList
         {
             if(view.getId() == R.id.button) {
                 ref.push().setValue(numClicks);
+                saveIfHighScore();
                 Intent intent = new Intent(CookieClicker.this, MainActivity.class);
                 startActivity(intent);
             }
@@ -220,7 +227,15 @@ public class CookieClicker extends AppCompatActivity implements View.OnClickList
         clicksAdded.show();
 
     }
-
+    private void saveIfHighScore()
+    {
+        if(prefs.getInt("highscore",0)<numClicks)
+        {
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putInt("highscore",(int)numClicks);
+            editor.apply();
+        }
+    }
     private TextView textViewEdit(TextView t) {
         t.setTextSize(40f);
         t.setTextColor(Color.WHITE);

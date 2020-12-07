@@ -86,6 +86,7 @@ public class SpriteGameView extends SurfaceView {
     private Dungeon_activity dungeon;
     Dungeon_activity dun;
     boolean gameover=false;
+
     @SuppressLint("WrongViewCast")
     public SpriteGameView(Context context, Dungeon_activity dungeon) {
 
@@ -99,6 +100,7 @@ public class SpriteGameView extends SurfaceView {
         ((Activity) getContext()).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         paint = new Paint();
         prefs = dungeon.getSharedPreferences("game", Context.MODE_PRIVATE);
+
         joystick = new Joystick(200, 900, 70, 40);
 
         shoot = new Shoot(2600, 900, 70);
