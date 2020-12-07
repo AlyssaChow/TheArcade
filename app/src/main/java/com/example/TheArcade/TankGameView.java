@@ -16,11 +16,15 @@ import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -37,6 +41,7 @@ public class TankGameView extends SurfaceView implements SurfaceHolder.Callback 
     private MainThread thread;
     private SharedPreferences prefs;
     public int currentMap;
+    private int lvl;
     private int[] maps = {
             R.raw.map1,
             R.raw.map2,
@@ -66,21 +71,6 @@ public class TankGameView extends SurfaceView implements SurfaceHolder.Callback 
         thread.setRunning(true);
         thread.start();
 
-        Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT+1:00"));
-        Date time = cal.getTime();
-        SimpleDateFormat date = new SimpleDateFormat("HH:mm:ss a");
-        date.setTimeZone(TimeZone.getTimeZone("GMT+1:00"));
-
-
-        Data.get().startTime = date.format(time);
-
-        try {
-            Data.get().start = date.parse(Data.get().startTime);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        Log.d("Time: ", Data.get().start.getTime() + "");
 
         reset();
 
@@ -122,6 +112,10 @@ public class TankGameView extends SurfaceView implements SurfaceHolder.Callback 
     private double mapTimeout;
     private boolean won;
 
+    public int GetcurrentMap() {
+        return 6;
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void update(double deltaTime) {
         if (won) {
@@ -144,8 +138,27 @@ public class TankGameView extends SurfaceView implements SurfaceHolder.Callback 
                     FirebaseDatabase database = FirebaseDatabase.getInstance();
 
                     DatabaseReference ref = database.getReference("TankHighscore");
+                    //int lvl = ref.getValue();
+                    ref.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            int lvl = snapshot.getValue(int.class);
+                            Log.d("TESTING:", lvl+"");
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                            Log.d("TESTING:", "oop");
+                        }
+                    });
+                    if (currentMap+1 > lvl) {
+                        ref.setValue(currentMap + 1);
+                        Log.d("TESTING:", "in if");
+                    } else {
+                        ref.setValue(lvl);
+                    }
                     //mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
-                    ref.push().setValue(currentMap+1);
+
                 } catch (Exception e) {
                     Log.d("DEBUG:", "oop");
 
@@ -184,8 +197,24 @@ public class TankGameView extends SurfaceView implements SurfaceHolder.Callback 
                         FirebaseDatabase database = FirebaseDatabase.getInstance();
 
                         DatabaseReference ref = database.getReference("TankHighscore");
-                        //mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
-                        ref.push().setValue(5);
+                        ref.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                int lvl = snapshot.getValue(int.class);
+                                Log.d("TESTING:", lvl+"");
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+                                Log.d("TESTING:", "oop");
+                            }
+                        });
+                        if (currentMap+1 > lvl) {
+                            ref.setValue(currentMap + 1);
+                            Log.d("TESTING:", "in if");
+                        } else {
+                            ref.setValue(lvl);
+                        }
                     } catch (Exception e) {
                         Log.d("DEBUG:", "oop");
 
@@ -196,25 +225,7 @@ public class TankGameView extends SurfaceView implements SurfaceHolder.Callback 
                     } else {
                         mapTimeout -= deltaTime;
                     }
-                    Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT+1:00"));
-                    Date time = cal.getTime();
-                    SimpleDateFormat date = new SimpleDateFormat("HH:mm:ss a");
-                    date.setTimeZone(TimeZone.getTimeZone("GMT+1:00"));
 
-                    Data.get().endTime = date.format(time);
-
-                    try {
-                        Data.get().end = date.parse(Data.get().endTime);
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-
-                    Log.d("Time: ", Data.get().end.getTime() + "");
-                    Log.d("Time: ", Data.get().start.getTime() + "");
-
-                    //Data.get().diff = Data.get().end.getTime() - Data.get().start.getTime();
-                    //Data.get().diffSeconds = Data.get().diff / 1000;
-                    //Log.d("TIME: ","Time in seconds: " + Data.get().diff + " seconds.");
 
 
                     return;

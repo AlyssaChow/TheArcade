@@ -1,12 +1,14 @@
 package com.example.TheArcade;
 
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.View;
 import android.view.Window;
@@ -14,11 +16,18 @@ import android.view.WindowManager;
 import android.widget.Button;
 
 import com.example.TheArcade.BrickGame.Brick;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class tankMain extends AppCompatActivity {
     private SurfaceHolder surfaceHolder;
-    private TankGameView gameView;
+    public TankGameView gameView;
+    public  TankGameView game;
     private SharedPreferences prefs;
+    private int lvls;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,12 +61,40 @@ public class tankMain extends AppCompatActivity {
         // Shoot Button
         findViewById(R.id.shootButton).setOnTouchListener(new CustomOnClick());
 
+        //findViewById(R.id.back_button).setOnTouchListener(new CustomOnClick());
+
         Button exitButton = findViewById(R.id.back_button);
 
         exitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                saveIfHighScore();
+                //TankGameView game;
+                //game.Pressed();
+                //Log.d("TESTING2","here");
+                //int i = gameView.currentMap;
+                //Log.d("TESTING2", i + "");
+                Log.d("DEBUG3", "HEYB");
+                Log.d("DEBUG3", "HEY");
+                FirebaseDatabase database = FirebaseDatabase.getInstance();
+
+                DatabaseReference ref = database.getReference("Test");
+                ref.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        lvls = snapshot.getValue(int.class);
+                        Log.d("DEBUG3:", "grab " + lvls+"");
+                        SharedPreferences.Editor editor = prefs.edit();
+                        editor.putInt("tankHighscore",lvls);
+                        editor.apply();
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Log.d("TESTING:", "oop");
+                    }
+                });
+                Log.d("DEBUG3", "HEYA");
                 Intent intent = new Intent(tankMain.this, MainActivity.class);
                 startActivity(intent);
             }
@@ -65,14 +102,32 @@ public class tankMain extends AppCompatActivity {
 
         });
     }
-    private void saveIfHighScore()
+    public void saveIfHighScore()
     {
-        if(prefs.getInt("tankHighscore",0)<gameView.currentMap+1)
-        {
-            SharedPreferences.Editor editor = prefs.edit();
-            editor.putInt("tankHighscore",gameView.currentMap+1);
-            editor.apply();
-        }
+
+        Log.d("DEBUG3", "HEY");
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+
+        DatabaseReference ref = database.getReference("Test");
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                lvls = snapshot.getValue(int.class);
+                Log.d("DEBUG3:", "grab " + lvls+"");
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putInt("tankHighscore",lvls);
+                editor.apply();
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.d("TESTING:", "oop");
+            }
+        });
+        Log.d("DEBUG3", lvls+"");
+
+
     }
     public void returnToMenu(View button) {
         finish();
