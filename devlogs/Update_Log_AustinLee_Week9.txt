@@ -1,0 +1,9 @@
+Dev log week 9	
+
+Finishing up D4
+
+Added highscore functionality 
+
+Finished adding animations
+
+App sends highscore to firebase database
