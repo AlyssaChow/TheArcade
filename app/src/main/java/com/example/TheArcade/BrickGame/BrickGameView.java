@@ -101,8 +101,7 @@ public class BrickGameView  extends SurfaceView implements SurfaceHolder.Callbac
 
         brickLevel.update(ball);
 
-        score = brickLevel.getMapScore();
-        brickLevel.resetScore();
+
         //ArrayList<BrickSprite> map = brickLevel.getmap();
         //int x= 0;
         //while(map.size()>x){
@@ -113,6 +112,8 @@ public class BrickGameView  extends SurfaceView implements SurfaceHolder.Callbac
 
         if(brickLevel.isEmpty()){
             thread.runGame(false);
+            score =+ brickLevel.getMapScore();
+            brickLevel.resetScore();
             newLevel();
         }
         if(ball.isOutofbounds()){
@@ -122,6 +123,7 @@ public class BrickGameView  extends SurfaceView implements SurfaceHolder.Callbac
         if(lives <= 0){
             thread.runGame(false); //game over
             ball.removeImage();
+            score =+ brickLevel.getMapScore();
             saveScore();
         }
 
@@ -130,9 +132,9 @@ public class BrickGameView  extends SurfaceView implements SurfaceHolder.Callbac
     }
 
     private void saveScore() {
-
+                ref.push().setValue(score);
                 SharedPreferences.Editor editor = prefs.edit();
-                editor.putInt("tankHighscore", score);
+                editor.putInt("BrickHighscore", score);
                 editor.apply();
 
     }

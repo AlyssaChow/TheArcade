@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
 
         TextView textBrick = findViewById(R.id.textBrick);
         final SharedPreferences prefsBrick = getSharedPreferences("game", MODE_PRIVATE);
-        textTank.setText("Highscore: " + prefsTank.getInt("BrickHighscore", 0));
+        textBrick.setText("Highscore: " + prefsBrick.getInt("BrickHighscore", 0));
 
 
 
