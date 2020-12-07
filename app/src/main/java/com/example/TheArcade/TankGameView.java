@@ -1,6 +1,7 @@
 package com.example.TheArcade;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -34,8 +35,8 @@ import java.util.TimeZone;
 
 public class TankGameView extends SurfaceView implements SurfaceHolder.Callback {
     private MainThread thread;
-
-    private int currentMap;
+    private SharedPreferences prefs;
+    public int currentMap;
     private int[] maps = {
             R.raw.map1,
             R.raw.map2,
@@ -47,9 +48,11 @@ public class TankGameView extends SurfaceView implements SurfaceHolder.Callback 
 
     public TankGameView(Context context, AttributeSet attributeSet) {
         super(context, attributeSet);
+
         getHolder().addCallback(this);
         thread = new MainThread(getHolder(), this);
         setFocusable(true);
+
     }
 
 
@@ -62,10 +65,12 @@ public class TankGameView extends SurfaceView implements SurfaceHolder.Callback 
     public void surfaceCreated(SurfaceHolder holder) {
         thread.setRunning(true);
         thread.start();
+
         Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT+1:00"));
         Date time = cal.getTime();
         SimpleDateFormat date = new SimpleDateFormat("HH:mm:ss a");
         date.setTimeZone(TimeZone.getTimeZone("GMT+1:00"));
+
 
         Data.get().startTime = date.format(time);
 
@@ -120,6 +125,7 @@ public class TankGameView extends SurfaceView implements SurfaceHolder.Callback 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void update(double deltaTime) {
         if (won) {
+
             return;
         }
         if (Data.get().map != null) {
@@ -247,4 +253,5 @@ public class TankGameView extends SurfaceView implements SurfaceHolder.Callback 
             Spritetank.drawSprites(canvas);
         }
     }
+
 }

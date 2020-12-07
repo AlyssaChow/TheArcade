@@ -85,6 +85,10 @@ public class MainActivity extends AppCompatActivity {
         final SharedPreferences prefsCookie = getSharedPreferences("game", MODE_PRIVATE);
         textCookie.setText("Highscore: " + prefsCookie.getInt("cookieHighscore", 0));
 
+        TextView textTank = findViewById(R.id.textTank);
+        final SharedPreferences prefsTank = getSharedPreferences("game", MODE_PRIVATE);
+        textTank.setText("Highscore: " + prefsTank.getInt("tankHighscore", 0));
+
 
 
         dungeonButton.setOnClickListener(new View.OnClickListener() {
