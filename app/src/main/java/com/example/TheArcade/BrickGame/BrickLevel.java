@@ -3,6 +3,10 @@ package com.example.TheArcade.BrickGame;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.content.res.Resources;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Rect;
+import android.graphics.RectF;
 import android.util.Log;
 
 import com.example.TheArcade.R;
@@ -18,11 +22,13 @@ public class BrickLevel {
     private int bricksizeX = (int)(50*2.5);
     private int bricksizeY = (int)(25*2.5);
 
-    private static int offsetX = 200;
-    private static int offsetY = 600;
-    private static int blocksize = 50;
+    private static int offsetX = 150;
+    private static int offsetY = 400;
+    private static int blocksize = 100;
+    private static int blockheight = 50;
     private int screenWidth;
 
+    private int mapScore = 0;
     private enum Difficulty{EASY,MED,HARD};
 
 
@@ -33,21 +39,39 @@ public class BrickLevel {
     }
     public void mapCreate(int mapX, int mapY){
         BrickSprite gen;
+        RectF rectangle;
         int startX = getXstart(mapX);
         int currentX = startX, currentY = offsetY;
         for(int i = 0;i<mapY;i++){ //Generates row of blocks
             for(int j = 0;j<mapX;j++){ //Generates blocks within a row
                 if(i<1){
-                    gen = new BrickSprite(2,currentX,currentY, BitmapFactory.decodeResource(resources, R.drawable.brick_2));
+                    rectangle = new RectF(currentX,currentY,currentX+blocksize,currentY+blockheight);
+                    if (j % 2 == 0 && mapY>2){
+                        gen = new BrickSprite(3,currentX,currentY, rectangle, genColor(3));
+                    } else {
+                        gen = new BrickSprite(2,currentX,currentY, rectangle, genColor(2));
+                    }
                 }else{
-                    gen = new BrickSprite(1,currentX,currentY, BitmapFactory.decodeResource(resources, R.drawable.brick_1));
+                    rectangle = new RectF(currentX,currentY,currentX+blocksize,currentY+blockheight);
+                    gen = new BrickSprite(1,currentX,currentY, rectangle, genColor(1));
                 }
                 map.add(gen);
                 currentX += offsetX + bricksizeX;
             }
-            currentY += 5 + bricksizeY;
+            currentY += 15 + bricksizeY;
             currentX =startX;
         }
+    }
+    private Paint genColor(int type){
+        Paint retPaint = new Paint();
+        switch(type){
+            case 3: retPaint.setColor(Color.MAGENTA);
+                    break;
+            case 2: retPaint.setColor(Color.GREEN);
+                    break;
+            default: retPaint.setColor(Color.RED);
+        }
+        return retPaint;
     }
 
     public void drawMap(Canvas canvas){
@@ -59,18 +83,25 @@ public class BrickLevel {
     public void update(BrickBall ball){
         for(int i=map.size();i>0;i--){
             if(map.get(i-1).intersects(ball)){
-                map.remove(i);
+                mapScore += map.remove(i-1).getBrickScore();
+                //Add level done;
             }
         }
+    }
+    public void resetScore(){
+        mapScore = 0;
     }
     //returns the position where the blocks will be centered in the middle of screen
     //Half the screen - the total length of the map
     private int getXstart(int mapX){
-        return (screenWidth/2) - ((blocksize*(mapX))+(offsetX * (mapX-1)));
+        return (screenWidth/2) - ((blocksize *(mapX-1)) + offsetX);
     }
     public ArrayList getmap(){
         return map;
     }
+
+    public int getMapScore(){return mapScore;}
+    public boolean isEmpty(){return map.isEmpty();}
 
 
 }

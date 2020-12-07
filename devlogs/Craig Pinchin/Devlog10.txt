@@ -1,2 +1,3 @@
 - improved game interactions
+- fixed collisions
 - polished menu
