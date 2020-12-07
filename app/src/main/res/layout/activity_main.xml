@@ -72,5 +72,40 @@
         android:layout_marginTop="250dp"
         android:background="@drawable/battletanks" />
 
+    <TextView
+        android:id="@+id/textDungeon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="80dp"
+        android:text="Highscore: 0"
+         />
+
+    <TextView
+        android:id="@+id/textBrick"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="270dp"
+        android:text="TextView" />
+    <TextView
+        android:id="@+id/textTank"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="600dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="270dp"
+        android:text="TextView" />
+    <TextView
+        android:id="@+id/textCookie"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="550dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="80dp"
+        android:text="Highscore: 0" />
+
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

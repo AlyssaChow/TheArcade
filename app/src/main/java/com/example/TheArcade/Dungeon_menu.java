@@ -39,7 +39,7 @@ public class Dungeon_menu extends AppCompatActivity {
         TextView highScoreTxt = findViewById(R.id.highScoreTxt);
 
         final SharedPreferences prefs = getSharedPreferences("game", MODE_PRIVATE);
-        highScoreTxt.setText("HighScore: " + prefs.getInt("highscore", 0));
+        highScoreTxt.setText("HighScore: " + prefs.getInt("dungeonHighscore", 0));
 
         isMute = prefs.getBoolean("isMute", false);
 
