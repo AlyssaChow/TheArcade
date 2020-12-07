@@ -433,9 +433,9 @@ public class SpriteGameView extends SurfaceView {
 
     private void saveIfHighScore() {
 
-        if (prefs.getInt("highscore", 0) < score) {
+        if (prefs.getInt("dungeonHighscore", 0) < score) {
             SharedPreferences.Editor editor = prefs.edit();
-            editor.putInt("highscore", score);
+            editor.putInt("dungeonHighscore", score);
             editor.apply();
         }
 

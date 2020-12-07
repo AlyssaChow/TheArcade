@@ -78,11 +78,11 @@ public class MainActivity extends AppCompatActivity {
 
         TextView textDungeon = findViewById(R.id.textDungeon);
         final SharedPreferences prefsDungeon = getSharedPreferences("game", MODE_PRIVATE);
-        textDungeon.setText("Highscore: " + prefsDungeon.getInt("highscore", 0));
+        textDungeon.setText("Highscore: " + prefsDungeon.getInt("dungeonHighscore", 0));
 
         TextView textCookie = findViewById(R.id.textCookie);
         final SharedPreferences prefsCookie = getSharedPreferences("game", MODE_PRIVATE);
-        textCookie.setText("Highscore: " + prefsCookie.getInt("highscore", 0));
+        textCookie.setText("Highscore: " + prefsCookie.getInt("cookieHighscore", 0));
 
 
         dungeonButton.setOnClickListener(new View.OnClickListener() {

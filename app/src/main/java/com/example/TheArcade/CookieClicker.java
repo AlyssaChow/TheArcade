@@ -229,10 +229,10 @@ public class CookieClicker extends AppCompatActivity implements View.OnClickList
     }
     private void saveIfHighScore()
     {
-        if(prefs.getInt("highscore",0)<numClicks)
+        if(prefs.getInt("cookieHighscore",0)<numClicks)
         {
             SharedPreferences.Editor editor = prefs.edit();
-            editor.putInt("highscore",(int)numClicks);
+            editor.putInt("cookieHighscore",(int)numClicks);
             editor.apply();
         }
     }
