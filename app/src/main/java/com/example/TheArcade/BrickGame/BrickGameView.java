@@ -29,11 +29,11 @@ public class BrickGameView  extends SurfaceView implements SurfaceHolder.Callbac
     private BrickLevel brickLevel;
     private BrickBall ball;
     private Paddle paddle;
-    //private BrickLives liveDisplay;
+    private BrickLives liveDisplay;
     //private BrickSprite gamebrick;
     private int score; //total score kept (updates on loss and level completion)
 
-    private TextView playerLives;
+    //private TextView playerLives;
 
     private int bricklevelX = 3;
     private int bricklevelY = 2;
@@ -50,7 +50,8 @@ public class BrickGameView  extends SurfaceView implements SurfaceHolder.Callbac
         setFocusable(true);
         lives = 3;
         score =0;
-        playerLives = (TextView) findViewById(R.id.brick_lives);
+
+        //playerLives = (TextView) findViewById(R.id.brick_lives);
         prefs = context.getSharedPreferences("game",Context.MODE_PRIVATE);
     }
 
@@ -65,6 +66,7 @@ public class BrickGameView  extends SurfaceView implements SurfaceHolder.Callbac
         paddle = new Paddle(BitmapFactory.decodeResource(getResources(),R.drawable.paddle));
         brickLevel = new BrickLevel(getResources());
         brickLevel.mapCreate(bricklevelX,bricklevelY);
+        liveDisplay = new BrickLives(getResources());
         //liveDisplay = new BrickLives(getResources());
 
 
@@ -123,6 +125,8 @@ public class BrickGameView  extends SurfaceView implements SurfaceHolder.Callbac
             saveScore();
         }
 
+
+
     }
 
     private void saveScore() {
@@ -141,7 +145,7 @@ public class BrickGameView  extends SurfaceView implements SurfaceHolder.Callbac
             ball.draw(canvas);
             paddle.draw(canvas);
             brickLevel.drawMap(canvas);
-            //liveDisplay.draw(canvas);
+            liveDisplay.draw(canvas);
         }
     }
 

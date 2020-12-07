@@ -89,6 +89,10 @@ public class MainActivity extends AppCompatActivity {
         final SharedPreferences prefsTank = getSharedPreferences("game", MODE_PRIVATE);
         textTank.setText("Highscore: " + prefsTank.getInt("tankHighscore", 0));
 
+        TextView textBrick = findViewById(R.id.textBrick);
+        final SharedPreferences prefsBrick = getSharedPreferences("game", MODE_PRIVATE);
+        textTank.setText("Highscore: " + prefsTank.getInt("BrickHighscore", 0));
+
 
 
         dungeonButton.setOnClickListener(new View.OnClickListener() {
@@ -106,6 +110,11 @@ public class MainActivity extends AppCompatActivity {
         brickButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Bundle bundle = new Bundle();
+                bundle.putString(FirebaseAnalytics.Param.ITEM_ID, String.valueOf(R.id.button1));
+                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "fab");
+                bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "image");
+                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
                 Intent intent = new Intent(MainActivity.this, Brick.class);
                 startActivity(intent);
             }
@@ -116,8 +125,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
 // Write a message to the database
                 Bundle bundle = new Bundle();
-                bundle.putString(FirebaseAnalytics.Param.ITEM_ID, String.valueOf(R.id.button2));
-                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "fab2");
+                bundle.putString(FirebaseAnalytics.Param.ITEM_ID, String.valueOf(R.id.button3));
+                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "fab3");
                 bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "image");
                 mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
                 Intent intent = new Intent(MainActivity.this, CookieClicker.class);
