@@ -1,6 +1,7 @@
 package com.example.TheArcade.BrickGame;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -14,6 +15,10 @@ import androidx.annotation.NonNull;
 
 import com.example.TheArcade.R;
 import com.example.TheArcade.Sprite;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -30,8 +35,13 @@ public class BrickGameView  extends SurfaceView implements SurfaceHolder.Callbac
 
     private TextView playerLives;
 
-    private int bricksizeX = (int)(50*2.5);
-    private int bricksizeY = (int)(25*2.5);
+    private int bricklevelX = 3;
+    private int bricklevelY = 2;
+
+    //Firebase
+    private SharedPreferences prefs;
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    final DatabaseReference ref = database.getReference("BrickHighscore");
 
     public BrickGameView(Context context, AttributeSet attributeSet){
         super(context);
@@ -41,7 +51,7 @@ public class BrickGameView  extends SurfaceView implements SurfaceHolder.Callbac
         lives = 3;
         score =0;
         playerLives = (TextView) findViewById(R.id.brick_lives);
-
+        prefs = context.getSharedPreferences("game",Context.MODE_PRIVATE);
     }
 
     @Override
@@ -54,7 +64,7 @@ public class BrickGameView  extends SurfaceView implements SurfaceHolder.Callbac
         ball = new BrickBall(BitmapFactory.decodeResource(getResources(), R.drawable.brickball_1));
         paddle = new Paddle(BitmapFactory.decodeResource(getResources(),R.drawable.paddle));
         brickLevel = new BrickLevel(getResources());
-        brickLevel.mapCreate(3,2);
+        brickLevel.mapCreate(bricklevelX,bricklevelY);
         //liveDisplay = new BrickLives(getResources());
 
 
@@ -88,6 +98,9 @@ public class BrickGameView  extends SurfaceView implements SurfaceHolder.Callbac
         ball.update(deltatime);
 
         brickLevel.update(ball);
+
+        score = brickLevel.getMapScore();
+        brickLevel.resetScore();
         //ArrayList<BrickSprite> map = brickLevel.getmap();
         //int x= 0;
         //while(map.size()>x){
@@ -98,16 +111,25 @@ public class BrickGameView  extends SurfaceView implements SurfaceHolder.Callbac
 
         if(brickLevel.isEmpty()){
             thread.runGame(false);
+            newLevel();
         }
         if(ball.isOutofbounds()){
             lives--;
-            playerLives.setText(Integer.toString(lives));
             ball.restart();
         }
         if(lives <= 0){
             thread.runGame(false); //game over
             ball.removeImage();
+            saveScore();
         }
+
+    }
+
+    private void saveScore() {
+
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putInt("tankHighscore", score);
+                editor.apply();
 
     }
 
@@ -121,6 +143,16 @@ public class BrickGameView  extends SurfaceView implements SurfaceHolder.Callbac
             brickLevel.drawMap(canvas);
             //liveDisplay.draw(canvas);
         }
+    }
+
+    private void newLevel(){
+        if(bricklevelX < 7)bricklevelX ++;
+        if(bricklevelY < 5)bricklevelY ++;
+
+        brickLevel = new BrickLevel(getResources());
+        brickLevel.mapCreate(bricklevelX,bricklevelY);
+        ball.restart();
+        thread.runGame(true);
     }
 
 }

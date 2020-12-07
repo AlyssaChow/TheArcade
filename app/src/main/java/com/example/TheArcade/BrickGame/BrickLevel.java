@@ -28,6 +28,7 @@ public class BrickLevel {
     private static int blockheight = 50;
     private int screenWidth;
 
+    private int mapScore = 0;
     private enum Difficulty{EASY,MED,HARD};
 
 
@@ -82,10 +83,13 @@ public class BrickLevel {
     public void update(BrickBall ball){
         for(int i=map.size();i>0;i--){
             if(map.get(i-1).intersects(ball)){
-                map.remove(i-1);
+                mapScore += map.remove(i-1).getBrickScore();
                 //Add level done;
             }
         }
+    }
+    public void resetScore(){
+        mapScore = 0;
     }
     //returns the position where the blocks will be centered in the middle of screen
     //Half the screen - the total length of the map
@@ -96,6 +100,7 @@ public class BrickLevel {
         return map;
     }
 
+    public int getMapScore(){return mapScore;}
     public boolean isEmpty(){return map.isEmpty();}
 
 

@@ -14,7 +14,7 @@ import com.example.TheArcade.R;
 public class BrickSprite {
     RectF block;
     int brickType;
-    int Health;
+    int BrickScore;
     private int x ,y;
     private int xLength,yLength;
     private boolean collision;
@@ -28,6 +28,7 @@ public class BrickSprite {
         this.y=y;
         this.xLength = x+50;
         this.yLength = y+25;
+        this.BrickScore = 0;
         collision = true;
 
         this.paintColor = paint;
@@ -53,13 +54,16 @@ public class BrickSprite {
 
                 if (brickType == 3){
                     brickType =2;
+                    BrickScore ++;
                     paintColor.setColor(Color.GREEN);
                     ball.bounceY();
                 }else if(brickType == 2){
                     brickType =1;
+                    BrickScore ++;
                     paintColor.setColor(Color.RED);
                     ball.bounceY();
                 } else{
+                    BrickScore ++;
                     ball.bounceY();
                     this.collision = false;
                     this.remove();
@@ -69,6 +73,8 @@ public class BrickSprite {
         }
         return false;
     }
+
+    public int getBrickScore(){return BrickScore;}
 
 
 }

@@ -37,7 +37,7 @@ public class BrickBall {
     public void restart(){
         outofbounds = false;
         xVelocity = 100;
-        yVelocity = -900;
+        yVelocity = -700;
         x = startLocX;
         y = startLocY;
     }
