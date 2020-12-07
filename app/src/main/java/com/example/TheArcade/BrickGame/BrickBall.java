@@ -6,14 +6,17 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 
+import androidx.constraintlayout.solver.widgets.Rectangle;
+
 public class BrickBall {
     private Bitmap image;
     private int x,y;
     private int xVelocity = 100;
-    private int yVelocity = -900;
-    private int screenWidth = (Resources.getSystem().getDisplayMetrics().widthPixels)/2;
-    private int screenHeight = (Resources.getSystem().getDisplayMetrics().heightPixels)-100;
-
+    private int yVelocity = -700;
+    private int screenWidth = (Resources.getSystem().getDisplayMetrics().widthPixels);
+    private int screenHeight = (Resources.getSystem().getDisplayMetrics().heightPixels);
+    private int startLocX= screenWidth/2;
+    private int startLocY= screenHeight-100;
     private int paddlelocation;
 
     private boolean outofbounds;
@@ -23,8 +26,8 @@ public class BrickBall {
         bounce = true;
         outofbounds = false;
         paddlelocation = screenWidth -100;
-        x = screenWidth;
-        y = screenHeight;
+        x = startLocX;
+        y = startLocY;
     }
     public void draw(Canvas canvas){
         canvas.drawBitmap(image,x,y,null);
@@ -35,8 +38,8 @@ public class BrickBall {
         outofbounds = false;
         xVelocity = 100;
         yVelocity = -900;
-        x = screenWidth;
-        y = screenHeight;
+        x = startLocX;
+        y = startLocY;
     }
 
     //update ball position
@@ -51,12 +54,12 @@ public class BrickBall {
             bounceY();
             bounce = true;
         }
-        if(x>(paddlelocation - 50) && x < (paddlelocation +250) && y > (screenHeight-30)){
+        if(x>(paddlelocation - 50) && x < (paddlelocation +250) && y > (screenHeight-100)){
             if(bounce == true){
                 bounceY();
             }
-
             bounce = false;
+
         }else if(y > screenHeight + (5 * image.getHeight())) {
                 outofbounds = true;
                 bounce = true;
@@ -87,9 +90,11 @@ public class BrickBall {
 
     public void bounceX(){
         xVelocity = xVelocity * -1;
+        bounce = true;
     }
     public void bounceY(){
         yVelocity = yVelocity * -1;
+        bounce = true;
     }
 
     public int getX(){
@@ -98,5 +103,6 @@ public class BrickBall {
 
     public int getY(){
         return  y;
+
     }
 }

@@ -5,31 +5,42 @@ import android.graphics.BitmapFactory;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.RectF;
 import android.graphics.Region;
+import com.example.TheArcade.R;
+
 
 public class BrickSprite {
-    Bitmap image;
+    RectF block;
     int brickType;
     int Health;
     private int x ,y;
     private int xLength,yLength;
     private boolean collision;
 
-    public BrickSprite(int type,int x ,int y, Bitmap image){
-        this.image = image;
+    Paint paintColor;
+
+    public BrickSprite(int type,int x ,int y, RectF block, Paint paint){
+        this.block = block;
         this.brickType = type;
         this.x=x;
         this.y=y;
         this.xLength = x+50;
         this.yLength = y+25;
         collision = true;
+
+        this.paintColor = paint;
+
     }
 
     public void draw(Canvas canvas){
-        canvas.drawBitmap(image,x,y,null);
+                    canvas.drawRect(block,paintColor);
     }
 
-    public void remove(){image.recycle();}
+    public void remove(){
+        block.setEmpty();
+    }
     public int getX(){return x;}
     public int getY(){return y;}
 
@@ -38,15 +49,26 @@ public class BrickSprite {
         int ballY=ball.getY();
 
         if(collision) {
-            if (ballX > (this.x) && ballX < (this.xLength) && ballY < (this.yLength) && ballY > (this.y)) {
+            if (ballX > (this.x - 40) && ballX < (this.xLength + 40) && ballY < (this.yLength) && ballY > (this.y)) {
 
-                ball.bounceY();
-                collision = false;
-                this.remove();
-                return true;
+                if (brickType == 3){
+                    brickType =2;
+                    paintColor.setColor(Color.GREEN);
+                    ball.bounceY();
+                }else if(brickType == 2){
+                    brickType =1;
+                    paintColor.setColor(Color.RED);
+                    ball.bounceY();
+                } else{
+                    ball.bounceY();
+                    this.collision = false;
+                    this.remove();
+                    return true;
+                }
             }
         }
         return false;
     }
+
 
 }

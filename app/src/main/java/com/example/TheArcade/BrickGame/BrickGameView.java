@@ -25,9 +25,10 @@ public class BrickGameView  extends SurfaceView implements SurfaceHolder.Callbac
     private BrickBall ball;
     private Paddle paddle;
     //private BrickLives liveDisplay;
-    private BrickSprite gamebrick;
+    //private BrickSprite gamebrick;
+    private int score; //total score kept (updates on loss and level completion)
 
-    private TextView playerScore;
+    private TextView playerLives;
 
     private int bricksizeX = (int)(50*2.5);
     private int bricksizeY = (int)(25*2.5);
@@ -38,18 +39,22 @@ public class BrickGameView  extends SurfaceView implements SurfaceHolder.Callbac
         thread = new BrickThread(getHolder(), this);
         setFocusable(true);
         lives = 3;
+        score =0;
+        playerLives = (TextView) findViewById(R.id.brick_lives);
+
     }
+
     @Override
 
     public void surfaceCreated(@NonNull SurfaceHolder holder) {
-        //playerScore = findViewById(R.id.brick_lives);
+
 
         thread.runGame(true);
         thread.start();
         ball = new BrickBall(BitmapFactory.decodeResource(getResources(), R.drawable.brickball_1));
         paddle = new Paddle(BitmapFactory.decodeResource(getResources(),R.drawable.paddle));
         brickLevel = new BrickLevel(getResources());
-        brickLevel.mapCreate(3,3);
+        brickLevel.mapCreate(3,2);
         //liveDisplay = new BrickLives(getResources());
 
 
@@ -84,16 +89,19 @@ public class BrickGameView  extends SurfaceView implements SurfaceHolder.Callbac
 
         brickLevel.update(ball);
         //ArrayList<BrickSprite> map = brickLevel.getmap();
-        int x= 0;
+        //int x= 0;
         //while(map.size()>x){
            // map.get(x).intersects(ball);
 
 
         //}
 
-
+        if(brickLevel.isEmpty()){
+            thread.runGame(false);
+        }
         if(ball.isOutofbounds()){
             lives--;
+            playerLives.setText(Integer.toString(lives));
             ball.restart();
         }
         if(lives <= 0){

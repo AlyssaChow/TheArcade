@@ -1,2 +1,3 @@
 - added collision for blocks
+- added different block functionality
 - added game over screen

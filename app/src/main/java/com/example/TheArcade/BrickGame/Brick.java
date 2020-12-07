@@ -27,13 +27,14 @@ public class Brick extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.brick_activity);
 
+        setContentView(R.layout.brick_activity);
 
         findViewById(R.id.PaddleLeft).setOnTouchListener(new CustomOnClick());
         findViewById(R.id.PaddleRight).setOnTouchListener(new CustomOnClick());
         TextView playerScore = findViewById(R.id.brick_lives);
-        playerScore.setText("3");
+
+        playerScore.setText("5");
         Button exitButton = findViewById(R.id.exit_button);
 
         exitButton.setOnClickListener(new View.OnClickListener() {
