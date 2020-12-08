@@ -36,7 +36,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class SpriteGameView extends SurfaceView {
 
@@ -86,11 +93,15 @@ public class SpriteGameView extends SurfaceView {
     private Dungeon_activity dungeon;
     Dungeon_activity dun;
     boolean gameover=false;
-
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    final DatabaseReference myRef2 = database.getReference("DungeonHighscore");
+    private FirebaseAnalytics mFirebaseAnalytics;
+    MainActivity act;
     @SuppressLint("WrongViewCast")
     public SpriteGameView(Context context, Dungeon_activity dungeon) {
 
         super(dungeon);
+
 
         pauseflag = false;
         DisplayMetrics displayMetrics = new DisplayMetrics();
@@ -101,9 +112,9 @@ public class SpriteGameView extends SurfaceView {
         paint = new Paint();
         prefs = dungeon.getSharedPreferences("game", Context.MODE_PRIVATE);
 
-        joystick = new Joystick(200, 900, 70, 40);
+        joystick = new Joystick(150, 750, 70, 40);
 
-        shoot = new Shoot(2600, 900, 70);
+        shoot = new Shoot(1600, 750, 70);
         shoot2 = new Shoot(10, 5, 70);
         shoot3 = new Shoot(400, 200, 70);
         setFocusable(true);
@@ -295,7 +306,7 @@ public class SpriteGameView extends SurfaceView {
 
         if (pauseflag) {
 
-                over.draw(canvas);
+            over.draw(canvas);
             try {
 
                 gameLoopThread.setRunning(false);
@@ -436,6 +447,8 @@ public class SpriteGameView extends SurfaceView {
         if (prefs.getInt("dungeonHighscore", 0) < score) {
             SharedPreferences.Editor editor = prefs.edit();
             editor.putInt("dungeonHighscore", score);
+
+            myRef2.push().setValue(score);
             editor.apply();
         }
 

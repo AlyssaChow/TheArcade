@@ -123,7 +123,7 @@ public class BrickGameView  extends SurfaceView implements SurfaceHolder.Callbac
         if(lives <= 0){
             thread.runGame(false); //game over
             ball.removeImage();
-            score =+ brickLevel.getMapScore();
+            score += brickLevel.getMapScore();
             saveScore();
         }
 
@@ -136,7 +136,6 @@ public class BrickGameView  extends SurfaceView implements SurfaceHolder.Callbac
                 SharedPreferences.Editor editor = prefs.edit();
                 editor.putInt("BrickHighscore", score);
                 editor.apply();
-
     }
 
     @Override
