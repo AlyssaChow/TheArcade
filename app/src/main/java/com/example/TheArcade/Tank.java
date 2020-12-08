@@ -181,16 +181,6 @@ public class Tank {
         losCooldown -= deltaTime;
 
         if (playable) {
-            if (CustomOnClick.isDown(R.id.back_button)) {
-                //Log.d("TESTINGH: ", "wtf");
-                try {
-                    int i = gameView.currentMap;
-                } catch (Exception e) {
-                    Log.d("TESTINGH", "dont work");
-                }
-                //Log.d("TESTINGH: ", i + "");
-
-            }
 
             if (CustomOnClick.isDown(R.id.upButton)) {
                 float t = yPos;

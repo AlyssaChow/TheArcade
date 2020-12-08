@@ -112,9 +112,6 @@ public class TankGameView extends SurfaceView implements SurfaceHolder.Callback 
     private double mapTimeout;
     private boolean won;
 
-    public int GetcurrentMap() {
-        return 6;
-    }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void update(double deltaTime) {
@@ -142,7 +139,7 @@ public class TankGameView extends SurfaceView implements SurfaceHolder.Callback 
                     ref.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            int lvl = snapshot.getValue(int.class);
+                            lvl = snapshot.getValue(int.class);
                             Log.d("TESTING:", lvl+"");
                         }
 
@@ -151,7 +148,7 @@ public class TankGameView extends SurfaceView implements SurfaceHolder.Callback 
                             Log.d("TESTING:", "oop");
                         }
                     });
-                    if (currentMap+1 > lvl) {
+                    if (currentMap+1 >= lvl) {
                         ref.setValue(currentMap + 1);
                         Log.d("TESTING:", "in if");
                     } else {

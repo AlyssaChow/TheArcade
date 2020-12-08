@@ -68,16 +68,12 @@ public class tankMain extends AppCompatActivity {
         exitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TankGameView game;
-                //game.Pressed();
-                //Log.d("TESTING2","here");
-                //int i = gameView.currentMap;
-                //Log.d("TESTING2", i + "");
+
                 Log.d("DEBUG3", "HEYB");
                 Log.d("DEBUG3", "HEY");
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
 
-                DatabaseReference ref = database.getReference("Test");
+                DatabaseReference ref = database.getReference("TankHighscore");
                 ref.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -102,33 +98,7 @@ public class tankMain extends AppCompatActivity {
 
         });
     }
-    public void saveIfHighScore()
-    {
 
-        Log.d("DEBUG3", "HEY");
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-
-        DatabaseReference ref = database.getReference("Test");
-        ref.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                lvls = snapshot.getValue(int.class);
-                Log.d("DEBUG3:", "grab " + lvls+"");
-                SharedPreferences.Editor editor = prefs.edit();
-                editor.putInt("tankHighscore",lvls);
-                editor.apply();
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.d("TESTING:", "oop");
-            }
-        });
-        Log.d("DEBUG3", lvls+"");
-
-
-    }
     public void returnToMenu(View button) {
         finish();
     }
