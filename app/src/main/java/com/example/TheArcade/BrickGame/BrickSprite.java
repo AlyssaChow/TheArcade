@@ -15,23 +15,25 @@ public class BrickSprite {
     RectF block;
     int brickType;
     int BrickScore = 0;
+    BrickLevel map;
+
     private int x ,y;
     private int xLength,yLength;
     private boolean collision;
 
     Paint paintColor;
 
-    public BrickSprite(int type,int x ,int y, RectF block, Paint paint){
+    public BrickSprite(int type,int x ,int y, RectF block, Paint paint, BrickLevel map){
         this.block = block;
         this.brickType = type;
         this.x=x;
         this.y=y;
         this.xLength = x+50;
         this.yLength = y+25;
+        this.map = map;
         collision = true;
 
         this.paintColor = paint;
-
     }
 
     public void draw(Canvas canvas){
@@ -53,16 +55,16 @@ public class BrickSprite {
 
                 if (brickType == 3){
                     brickType =2;
-                    BrickScore+=1;
+                    map.increaseScore();
                     paintColor.setColor(Color.GREEN);
                     ball.bounceY();
                 }else if(brickType == 2){
                     brickType =1;
-                    BrickScore+=1;
+                    map.increaseScore();
                     paintColor.setColor(Color.RED);
                     ball.bounceY();
                 } else{
-                    BrickScore+=1;
+                    map.increaseScore();
                     ball.bounceY();
                     this.collision = false;
                     this.remove();

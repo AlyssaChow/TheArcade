@@ -121,9 +121,9 @@ public class BrickGameView  extends SurfaceView implements SurfaceHolder.Callbac
             ball.restart();
         }
         if(lives <= 0){
+            score += brickLevel.getMapScore();
             thread.runGame(false); //game over
             ball.removeImage();
-            score += brickLevel.getMapScore();
             saveScore();
         }
 

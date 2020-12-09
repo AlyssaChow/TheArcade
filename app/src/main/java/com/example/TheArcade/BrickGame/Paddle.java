@@ -11,7 +11,7 @@ public class Paddle {
     private Bitmap image;
     private int x;
     private int y;
-    private int xSpeed = 500;
+    private int xSpeed = 650;
     private int screenWidth = Resources.getSystem().getDisplayMetrics().widthPixels;
     private int screenHeight = Resources.getSystem().getDisplayMetrics().heightPixels;
 
@@ -48,5 +48,8 @@ public class Paddle {
 
     public int returnX(){
         return x;
+    }
+    public int getPaddleWidth(Canvas canvas){
+        return image.getScaledWidth(canvas);
     }
 }

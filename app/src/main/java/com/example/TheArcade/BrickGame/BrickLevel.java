@@ -47,13 +47,13 @@ public class BrickLevel {
                 if(i<1){
                     rectangle = new RectF(currentX,currentY,currentX+blocksize,currentY+blockheight);
                     if (j % 2 == 0 && mapY>2){
-                        gen = new BrickSprite(3,currentX,currentY, rectangle, genColor(3));
+                        gen = new BrickSprite(3,currentX,currentY, rectangle, genColor(3),this);
                     } else {
-                        gen = new BrickSprite(2,currentX,currentY, rectangle, genColor(2));
+                        gen = new BrickSprite(2,currentX,currentY, rectangle, genColor(2),this);
                     }
                 }else{
                     rectangle = new RectF(currentX,currentY,currentX+blocksize,currentY+blockheight);
-                    gen = new BrickSprite(1,currentX,currentY, rectangle, genColor(1));
+                    gen = new BrickSprite(1,currentX,currentY, rectangle, genColor(1),this);
                 }
                 map.add(gen);
                 currentX += offsetX + bricksizeX;
@@ -88,6 +88,13 @@ public class BrickLevel {
             }
         }
     }
+    public int getBlockScore(){
+        int blockscore = 0;
+        for(int i=map.size();i>0;i--){
+            blockscore+=map.get(i).getBrickScore();
+        }
+        return blockscore;
+    }
     public void resetScore(){
         mapScore = 0;
     }
@@ -100,7 +107,15 @@ public class BrickLevel {
         return map;
     }
 
-    public int getMapScore(){return mapScore;}
+    public int getMapScore(){
+        //return mapScore + getBlockScore();
+        return mapScore;
+    }
+
+    public void increaseScore(){
+        mapScore+= 1;
+    }
+
     public boolean isEmpty(){return map.isEmpty();}
 
 
