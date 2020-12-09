@@ -75,23 +75,24 @@ public class MainActivity extends AppCompatActivity {
         Button brickButton = findViewById(R.id.button3);
         Button tankButton = findViewById(R.id.button4);
 
+        Button debug = findViewById(R.id.debugbutton);
 
-
-        TextView textDungeon = findViewById(R.id.textDungeon);
+        final TextView textDungeon = findViewById(R.id.textDungeon);
         final SharedPreferences prefsDungeon = getSharedPreferences("game", MODE_PRIVATE);
         textDungeon.setText("Highscore: " + prefsDungeon.getInt("dungeonHighscore", 0));
 
-        TextView textCookie = findViewById(R.id.textCookie);
+        final TextView textCookie = findViewById(R.id.textCookie);
         final SharedPreferences prefsCookie = getSharedPreferences("game", MODE_PRIVATE);
         textCookie.setText("Highscore: " + prefsCookie.getInt("cookieHighscore", 0));
 
-        TextView textTank = findViewById(R.id.textTank);
+        final TextView textTank = findViewById(R.id.textTank);
         final SharedPreferences prefsTank = getSharedPreferences("game", MODE_PRIVATE);
         textTank.setText("Highscore: " + prefsTank.getInt("tankHighscore", 0));
 
-        TextView textBrick = findViewById(R.id.textBrick);
+        final TextView textBrick = findViewById(R.id.textBrick);
         final SharedPreferences prefsBrick = getSharedPreferences("game", MODE_PRIVATE);
         textBrick.setText("Highscore: " + prefsBrick.getInt("BrickHighscore", 0));
+
 
 
 
@@ -149,6 +150,16 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        debug.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                reset(prefsBrick,textBrick);
+                reset(prefsCookie,textCookie);
+                reset(prefsDungeon,textDungeon);
+                reset(prefsTank,textTank);
+            }
+        });
+
 
     }
 
@@ -192,5 +203,12 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+    public void reset(SharedPreferences pref,TextView highscoretxt){
+        highscoretxt.setText("Highscore: 0");
+        SharedPreferences.Editor preferencesEditor = pref.edit();
+        preferencesEditor.clear();
+        preferencesEditor.apply();
+    }
 
 }
